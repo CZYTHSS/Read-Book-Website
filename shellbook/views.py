@@ -8,32 +8,7 @@ from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
 def home(request):
-	class book:
-		def __init__(self):
-			book.name = ""
-			book.author = ""
-			book.date = ""
-	book1 = book()
-	book1.name = "三重门"
-	book1.author = "韩寒"
-	book1.date = "2003-09"
-	book2 = book()
-	book2.name = "三重门"
-	book2.author = "韩寒"
-	book2.date = "2003-09"
-	book3 = book()
-	book3.name = "三重门"
-	book3.author = "韩寒"
-	book3.date = "2003-09"
-	book4 = book()
-	book4.name = "三重门"
-	book4.author = "韩寒"
-	book4.date = "2003-09"
-	book5 = book()
-	book5.name = "三重门"
-	book5.author = "韩寒"
-	book5.date = "2003-09"
-	books = [book1,book2,book3,book4,book5]
+	books = Book_info.GetbooksbyNewDate()
 	return render(request, 'home.html', {'books': books}) 
 
 @csrf_protect
@@ -45,3 +20,13 @@ def userregister(request):
 		return HttpResponse('hello')
 	else:# 当正常访问时
 		return render(request, 'user_registration.html')
+def userlogin(request):
+	if request.POST:   # 当提交表单时     
+		a = request.POST['username']
+		b = request.POST['userpassword']
+		if Personal_info.VerifyLogin(a,b) == 1:
+			return HttpResponse('login succeeded')
+		else:
+			return render(request, 'user_login.html')
+	else:# 当正常访问时
+		return render(request, 'user_login.html')

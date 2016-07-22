@@ -13,7 +13,7 @@ class Book_info(models.Model):
 	bookyear = models.DateField(default = date.today)
 	bookpress = models.CharField(max_length = 100)
 	classification = models.CharField(max_length = 100)
-	bookcover = models.CharField(max_length = 100)
+	bookcover = models.CharField(max_length = 150)
 	usernumber = models.IntegerField()
 	onepoint = models.IntegerField()
 	twopoint = models.IntegerField()

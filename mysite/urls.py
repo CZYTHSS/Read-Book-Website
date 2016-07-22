@@ -16,9 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from shellbook import views as shellbook_views
+from django.conf import settings
 
 urlpatterns = [
 	url(r'^$', shellbook_views.home, name='home'),
 	url(r'^admin/', admin.site.urls),
 	url(r'^register/', shellbook_views.userregister,name = 'register'),
+	url(r'^login/', shellbook_views.userlogin,name = 'login'),
+	url(r'^static/(?P<path>.*)$','django.views.static.server',{'document_root':settings.STATIC_ROOT},name='static'),
 ]
