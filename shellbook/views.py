@@ -5,28 +5,59 @@ from django.http import HttpResponse
 from .forms import AddUserForm
 from shellbook.models import Personal_info
 from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def home(request):
-	books = Book_info.GetbooksbyNewDate()
-	return render(request, 'home.html', {'books': books}) 
+	if len(request.GET) == 0:
+		return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
+	else:
+		a = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
+		return render(request,'book.html',{'bookobject':a})
+	
 
 @csrf_protect
 def userregister(request):
 	if request.POST:   # 当提交表单时     
 		a = request.POST['username']
 		b = request.POST['userpassword']
-		Personal_info.MAddUser(a,b)
-		return HttpResponse('hello')
+		if Personal_info.MAddUser(a,b) == 0:
+			return render(request, 'user_registration.html', {'flag': 0})
+		else:
+			return HttpResponseRedirect("../login/")
 	else:# 当正常访问时
 		return render(request, 'user_registration.html')
 def userlogin(request):
-	if request.POST:   # 当提交表单时     
+	if request.POST:   # 当提交表单时  
+		print(request.POST)
 		a = request.POST['username']
 		b = request.POST['userpassword']
 		if Personal_info.VerifyLogin(a,b) == 1:
-			return HttpResponse('login succeeded')
+			return render(request, 'home.html', {'flag': 1, 'username': a, 'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
 		else:
-			return render(request, 'user_login.html')
+			return render(request, 'user_login.html',{'flag': 0})
 	else:# 当正常访问时
 		return render(request, 'user_login.html')
+def userinfo(request):
+	if request.POST:   # 当提交表单时
+		a = request.POST['nickname']
+		b = request.POST['region']
+		c = request.POST['introduce']
+		d = request.POST['userinfo']
+		e = request.POST['gender']
+		f = request.FILES['img']
+		Personal_info.Changeuserinfo(d,a,b,c,e,f)
+		print(Personal_info.GetUserByName(d).gender)
+		return render(request, 'personalhome.html',{'username':d,
+				'nickname':Personal_info.GetUserByName(d).nickname,
+				'region':Personal_info.GetUserByName(d).region,
+				'introduce':Personal_info.GetUserByName(d).introduce,
+				'gender':Personal_info.GetUserByName(d).gender,
+				'img':Personal_info.GetUserByName(d).photo.url})
+	mname = str(request.GET['username'])
+	return render(request, 'personalhome.html',{'username':mname,
+				'nickname':Personal_info.GetUserByName(mname).nickname,
+				'region':Personal_info.GetUserByName(mname).region,
+				'introduce':Personal_info.GetUserByName(mname).introduce,
+				'gender':Personal_info.GetUserByName(mname).gender,
+				'img':Personal_info.GetUserByName(mname).photo.url})

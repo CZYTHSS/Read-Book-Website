@@ -252,12 +252,18 @@ class Personal_info(models.Model):
 	password = models.CharField(max_length = 100)
 	nickname = models.CharField(max_length = 100)
 	gender = models.IntegerField()
-	photo = models.CharField(max_length = 100)
+	photo =  models.ImageField(upload_to = 'upload')
 	region = models.CharField(max_length = 100)
 	introduce = models.CharField(max_length = 100)
+	#用户名存在的时候返回0,否则返回1
 	def MAddUser(musername,muserpassword):
-		a = Personal_info(username = musername,password = muserpassword,nickname = "",gender = 0,photo = "",region = "",introduce = "")
-		a.save()
+		b = Personal_info.objects.filter(username = musername)
+		if len(b) == 0:
+			a = Personal_info(username = musername,password = muserpassword,nickname = "",gender = 0,photo = "",region = "",introduce = "")
+			a.save()
+			return 1
+		else:
+			return 0
 	#0登陆失败,1登陆成功
 	def VerifyLogin(musername,muserpassword):
 		b = Personal_info.objects.filter(username = musername)
@@ -268,6 +274,22 @@ class Personal_info(models.Model):
 				return 0
 		else:
 			return 0
+	def Changeuserinfo(musername,mnickname,mregion,mintroduce,mgender,mimg):
+		a = Personal_info.objects.get(username = musername)
+		a.nickname = mnickname
+		a.region = mregion
+		a.introduce = mintroduce
+		if mgender == '男':
+			a.gender = 0
+		else:
+			a.gender = 1
+		a.photo = mimg
+		a.save()
+	def GetUserByName(musername):
+		return Personal_info.objects.get(username = musername)
+		
+		
+	
 		
 			
 		
