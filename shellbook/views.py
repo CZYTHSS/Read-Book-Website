@@ -14,9 +14,9 @@ def home(request):
 		if len(request.GET) == 0:
 			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
 		elif len(request.GET) > 0:
-			print(request.GET)
-			a = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
-			return render(request,'book.html',{'bookobject':a,'username':request.GET['username']})
+			a = Book_Review.GetCommentsBybookname(request.GET['book'])
+			a1 = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
+			return render(request,'book.html',{'bookobject':a1,'username':request.GET['username'],'comment':a})
 	else:
 		if len(request.POST) == 0:
 			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
@@ -31,8 +31,10 @@ def home(request):
 				a = Book_info.GetbooksbyClassification(request.POST['search'])
 				return render(request, 'searchresults.html', {'books': a,'flag':0})	
 		else:
-			Book_Review.StoreComment(request.GET['book'],"yuyuanhang",request.POST['comment'])
-			return HttpResponse("hello")
+			Book_Review.StoreComment(request.GET['book'],request.GET['username'],request.POST['comment'])
+			a = Book_Review.GetCommentsBybookname(request.GET['book'])
+			a1 = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
+			return render(request,'book.html',{'bookobject':a1,'username':request.GET['username'],'comment':a})
 
 @csrf_protect
 def userregister(request):
@@ -63,8 +65,8 @@ def userlogin(request):
 			b = request.POST['userpassword']
 			if Personal_info.VerifyLogin(a,b) == 1:
 				return render(request, 'home.html', {'flag': 1, 'username': a, 'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
-		else:
-			return render(request, 'user_login.html',{'flag': 0})
+			else:
+				return render(request, 'user_login.html',{'flag': 0})
 	else:# 当正常访问时
 		return render(request, 'user_login.html')
 def userinfo(request):
