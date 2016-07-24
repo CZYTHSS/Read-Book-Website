@@ -306,6 +306,73 @@
 				width:95%;
 				height:75%;
 			}
+			.search{
+				font-family:"华文新魏";
+				font-size:30px;
+				width:70%;
+				padding-left:15%;
+				padding-right:15%;
+			}
+			#search{
+				height:40px;
+				width:68%;
+				font-size:20px;
+				font-family:"华文新魏";
+				border-width:3px;
+				border-color:#7C4DFF;
+			}
+			#searchbutton{
+				float:right;
+				margin-right:5%;
+				margin-top:2px;
+				background-color: #a5b8da;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+				background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: linear-gradient(top, #a5b8da, #7089b3);
+				border-top: 1px solid #758fba;
+				border-right: 1px solid #6c84ab;
+				border-bottom: 1px solid #5c6f91;
+				border-left: 1px solid #6c84ab;
+				border-radius: 18px;
+				-webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+				box-shadow: inset 0 1px 0 0 #aec3e5;
+				color: #fff;
+				font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+				padding: 8px 0;
+				text-align: center;
+				text-shadow: 0 -1px 1px #64799e;
+				text-transform: uppercase;
+				width: 100px; }
+			#searchbutton:hover {
+				background-color: #9badcc;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+				background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+				background-image: linear-gradient(top, #9badcc, #687fa6);
+				border-top: 1px solid #6d86ad;
+				border-right: 1px solid #647a9e;
+				border-bottom: 1px solid #546685;
+				border-left: 1px solid #647a9e;
+				-webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+				box-shadow: inset 0 1px 0 0 #a5b9d9;
+				cursor: pointer; }
+			#searchbutton:active {
+				border: 1px solid #546685;
+				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
+			#selectbooks{
+				height:40px;
+				width:80px;
+				font-size:20px;
+				font-family:"华文新魏";
+				border-width:3px;
+				border-color:#7C4DFF;
+			}
 		</style>
 	</head>
 
@@ -332,6 +399,14 @@
 					<img alt="Meet your next favorite book." src="https://s.gr-assets.com/assets/home/headline-e2cd420e71737ff2815d09af5b65c4e4.png">
 				</div>
 			</div>
+		</div>
+		<div class = "search">搜索图书 :
+			<select name = "gender" id= "selectbooks">
+				<option style="width:200px" selected = "selected">书名</option>
+				<option style="width:200px">作者</option>
+				<option style="width:200px">类别</option>
+			</select>
+			<input id = "search"><div id = "searchbutton" onclick="window.location.href='register'">搜索</div>
 		</div>
 		<div class = "NewBooks" align="center">
 			<div id = "section1"><h1>新书速递</h1></div>
