@@ -373,10 +373,17 @@
 				border-width:3px;
 				border-color:#7C4DFF;
 			}
+			#flag{
+				width:1px;
+				display:none;
+				float:right;
+			}
 		</style>
 	</head>
 
 	<body>
+		<form method = "POST">
+			{% csrf_token %}
 		<div class="mainContent">
 			<div id="bg">  
 				<img src='/static/webwxgetmsgimg.jpg' alt="">  
@@ -389,7 +396,7 @@
 					<div id = "login" onclick="window.location.href='login'">登陆</div>
 					<div id = "register" onclick="window.location.href='register'">注册</div>
 				{% else %}
-					<div id = "username" name = "username">{{ username }}</div>
+					<div id = "username">{{ username }}</div>
 					<a href = "http://127.0.0.1:8000/login/personal_info/?username={{username}}"><div id = "personal_info">个人信息</div></a>
 					<a href = "http://127.0.0.1:8000/"><div id = "logout">注销</div></a>
 				{% endif %}
@@ -400,16 +407,15 @@
 				</div>
 			</div>
 		</div>
-		<form method = "POST">
-			{% csrf_token %}
 		<div class = "search">搜索图书 :
 			<select name = "select" id= "selectbooks">
 				<option style="width:200px" selected = "selected">书名</option>
 				<option style="width:200px">作者</option>
 				<option style="width:200px">类别</option>
 			</select>
-			<input id = "search" name = "search"><input type = "submit" id = "searchbutton" value = "搜索">
+			<input id = "search" name = "search"><input type = "submit" id = "searchbutton" value = "搜索" name = "search1">
 		</div>
+		<input type = "text" name = "username" style = "display:none" value = "{{username}}">
 		</form>
 		<div class = "NewBooks" align="center">
 			<div id = "section1"><h1>新书速递</h1></div>
@@ -417,8 +423,8 @@
 			
 			{% for book in books %}
 				<div class = "NewBook" >
-					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}"><img src = "{{book.bookcover}}"/></a><br/>
-					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}"><font size="5">{{ book.bookname }}</font></a></b><br/><br/>
+					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><img src = "{{book.bookcover}}"/></a><br/>
+					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><font size="5">{{ book.bookname }}</font></a></b><br/><br/>
 					<font size="3">{{ book.bookwriter }}<font>
 					<p>{{book.bookyear}}</p>
 				</div>
@@ -430,8 +436,8 @@
 			<hr />
 			{% for book in hotbooks %}
 				<div class = "HotBook" align="center">
-					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}"><img src = "{{book.bookcover}}"/></a><br/>
-					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}"><font size="5">{{ book.bookname }}</font></a></b><br/><br/>
+					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><img src = "{{book.bookcover}}"/></a><br/>
+					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><font size="5">{{ book.bookname }}</font></a></b><br/><br/>
 					<font size="3">{{ book.bookwriter }}<font>
 					<p>{{book.bookyear}}</p>
 				</div>
