@@ -258,10 +258,16 @@ class Message_Record(models.Model):
 	date = models.DateField(default = date.today)
 	
 class Book_Review(models.Model):
-	bookid = models.IntegerField()
-	userid = models.IntegerField()
+	bookname = models.CharField(max_length = 100)
+	username = models.CharField(max_length = 100)
 	comment = models.CharField(max_length = 100)
-	time = models.DateField(default = date.today)
+	time = models.CharField(max_length = 100)
+	def StoreComment(mbookname,musername,mcomment):
+		a = Book_Review(bookname = mbookname,username = musername,comment = mcomment,time = str(datetime.datetime.fromtimestamp(time.time())))
+		a.save()
+	def FindBookReview(mbookname):
+		a = Book_Review.objects.filter(bookname = mbookname)
+		return a
 
 class Personal_info(models.Model):
 	username = models.CharField(max_length = 100)

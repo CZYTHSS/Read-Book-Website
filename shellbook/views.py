@@ -4,12 +4,13 @@ from django.http import HttpResponse
 # 引入我们创建的表单类
 from .forms import AddUserForm
 from shellbook.models import Personal_info
+from shellbook.models import Book_Review
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 
 # Create your views here.
 def home(request):
-	if request.GET:
+	if request.method == "GET":
 		if len(request.GET) == 0:
 			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
 		elif len(request.GET) > 0:
@@ -18,7 +19,7 @@ def home(request):
 	else:
 		if len(request.POST) == 0:
 			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
-		else:
+		elif len(request.GET) == 0:
 			if request.POST['select'] == "书名":
 				a = Book_info.GetbooksbyBookname(request.POST['search'])
 				return render(request, 'searchresults.html', {'books': a}) 
@@ -27,7 +28,10 @@ def home(request):
 				return render(request, 'searchresults.html', {'books': a})
 			elif request.POST['select'] == "类别":
 				a = Book_info.GetbooksbyClassification(request.POST['search'])
-				return render(request, 'searchresults.html', {'books': a})				
+				return render(request, 'searchresults.html', {'books': a})	
+		else:
+			Book_Review.StoreComment(request.GET['book'],"yuyuanhang",request.POST['comment'])
+			return HttpResponse("hello")
 
 @csrf_protect
 def userregister(request):

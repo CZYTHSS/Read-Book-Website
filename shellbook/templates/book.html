@@ -343,10 +343,13 @@
 				<p><span class="BookLabel">五星评价数：</span>{{bookobject.fivepoint}}</p>
 			</div>
 			</div>
+		<form method = "POST">
+			{% csrf_token %}
 			<div class="comment">
-				<textarea id = "introduce" name="introduce" cols="100%" rows="5">{{introduce}}</textarea>
-				<p class="commentLabel">提交评论</p>
+				<textarea id = "introduce" name="comment" cols="100%" rows="5"></textarea>
+				<input type = "submit" value = "发布" name = "submit">
 			</div>
+		</form>
 		</div>
 		
 		<br/><br/><br/><br/><br/>
