@@ -254,7 +254,7 @@
 			}
 			.NewBooks{
 				width:50%;
-				height:850px;
+				/* height:850px; */
 				text-align:left;
 				padding-left:25%;
 				padding-right:25%;
@@ -279,7 +279,7 @@
 			}
 			.NewBook img{
 				width:100%;
-				height:75%;
+				height:80%;
 			}
 			.BookInfo {
 				float:left;
@@ -288,6 +288,18 @@
 				font-family:"宋体";
 				font-size:3;
 				color:grey;
+			}
+			.commentLabel {
+				font-family:"宋体";
+				color:grey;
+			}
+			.commentLabel:hover {
+				font-family:"宋体";
+				color:red;
+				cursor: pointer;
+			}
+			.comment {
+				font-family:"华文新魏";
 			}
 		</style>
 	</head>
@@ -311,8 +323,9 @@
 		</div>
 		<div id = "section1" align="center"><h1>详细信息</h1></div>
 			<hr />
-		<div class = "NewBooks" align="center">	
+		<div class = "NewBooks" >	
 			<b><font size="6">{{ bookobject.bookname }}</font></b><br/><br/>
+			
 			<div>
 			<div class = "NewBook" >
 				<img src = "{{bookobject.bookcover}}"/><br/>
@@ -330,6 +343,12 @@
 				<p><span class="BookLabel">五星评价数：</span>{{bookobject.fivepoint}}</p>
 			</div>
 			</div>
+			<div class="comment">
+				<textarea id = "introduce" name="introduce" cols="100%" rows="5">{{introduce}}</textarea>
+				<p class="commentLabel">提交评论</p>
+			</div>
 		</div>
+		
+		<br/><br/><br/><br/><br/>
 	</body>
 </html>
