@@ -269,7 +269,7 @@
 				padding-right:5%;
 				text-align:center;
 				width:30%;
-				height:50%;
+				height:45%;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
@@ -279,14 +279,15 @@
 			}
 			.NewBook img{
 				width:100%;
-				height:80%;
+				height:100%;
 			}
 			.BookInfo {
 				height:50%;
+				font-size:20px;
 			}
 			.BookLabel {
-				font-family:"宋体";
-				font-size:3;
+				font-family:"华文新魏";
+				font-size:20px;
 				color:grey;
 			}
 			.commentLabel {
@@ -303,6 +304,8 @@
 				padding-left:25%;
 				padding-right:25%;
 				font-family:"华文新魏";
+				margin-top:10px;
+				height:200px;
 			}
 			#login{
 				margin-left:55%;
@@ -492,6 +495,52 @@
 				border: 1px solid #546685;
 				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
 				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
+			.ClickButton{
+				margin-left:1%;
+				font-size:20px;
+				float:left;
+				margin-top:50px;
+				background-color: #a5b8da;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+				background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: linear-gradient(top, #a5b8da, #7089b3);
+				border-top: 1px solid #758fba;
+				border-right: 1px solid #6c84ab;
+				border-bottom: 1px solid #5c6f91;
+				border-left: 1px solid #6c84ab;
+				border-radius: 18px;
+				-webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+				box-shadow: inset 0 1px 0 0 #aec3e5;
+				color: #fff;
+				font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+				padding: 8px 0;
+				text-align: center;
+				text-shadow: 0 -1px 1px #64799e;
+				text-transform: uppercase;
+				width: 100px;
+			}
+			.ClickButton:hover {
+				background-color: #9badcc;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+				background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+				background-image: linear-gradient(top, #9badcc, #687fa6);
+				border-top: 1px solid #6d86ad;
+				border-right: 1px solid #647a9e;
+				border-bottom: 1px solid #546685;
+				border-left: 1px solid #647a9e;
+				-webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+				box-shadow: inset 0 1px 0 0 #a5b9d9;
+				cursor: pointer; }
+			.ClickButton:active {
+				border: 1px solid #546685;
+				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
 			#username{
 				margin-left:50%;
 				margin-top:45px;
@@ -507,15 +556,33 @@
 				font-family:"华文新魏";
 			}
 			.singlereview{
-				border: 1px solid #546685;
+				margin-top:10px;
+				border: 3px solid gray;
 				width:100%;
-				height:80px;
+				height:100px;
+				border-radius:10px;
 			}
-			.portraitbox{position: relative;height: 50px;background-size: cover;margin: 0 10px;width: 50px}
-			.portrait{margin-top:5px;height: 50px;width: 50px}
-			.nickname{font-family: "华文新魏"; font-size: 10px; width: 100%;text-align: center;overflow: hidden}
-			.content{font-family: "华文新魏"; overflow: hidden; font-size: 20px; height: 50px}
+			.portraitbox{position: relative;height: 50px;background-size: cover;margin: 0 10px;width: 50px;}
+			.portrait{margin-top:10px;height: 50px;width: 50px;border:1px solid black;margin-left:5px;}
+			.nickname{font-family: "华文新魏"; font-size: 17px; width: 100%;text-align: center;overflow: hidden;margin-top:20px;}
+			.content{font-family: "华文新魏"; overflow: hidden; font-size: 20px; height: 50px;margin-top:10px;}
 			.border{width: 80px;float:left;}
+			#time{
+				float:right;
+				margin-top:10px;
+				margin-right:10px;
+				font-size:20px;
+			}
+			#review_section{
+				font-size:25px;
+				text-align:center;
+			}
+			#introduce{
+				border:3px solid gray;
+				font-size:20px;
+				float:left;
+				border-radius:10px;
+			}
 		</style>
 	</head>
 
@@ -552,7 +619,7 @@
 				<img src = "{{bookobject.bookcover}}"/><br/>
 			</div>
 			<div class="BookInfo">
-				<font size="3"><span class="BookLabel">作者：</span>{{ bookobject.bookwriter }}<font>
+				<p><span class="BookLabel">作者：</span>{{ bookobject.bookwriter }}</p>
 				<p><span class="BookLabel">出版时间：</span>{{bookobject.bookyear}}</p>
 				<p><span class="BookLabel">出版社：</span>{{bookobject.bookpress}}</p>
 				<p><span class="BookLabel">类别：</span>{{bookobject.classification}}</p>
@@ -579,16 +646,16 @@
 							{% endif %}
 							<div class="nickname">{{review.nickname}}</div>
 						</div>
+						<div class="content">{{review.comment}}</div>
+						<div id = "time">发表于{{review.time}}</div>
 					</div>
-					<div class="content">{{review.comment}}</div>
 				{% endfor %}
 			</div>
 			<div class="comment">
 				<textarea id = "introduce" name="comment" cols="80%" rows="5"></textarea>
-				<input type = "submit" value = "发布" name = "submit">
+				<input type = "submit" class="ClickButton" value = "发表评论">
 			</div>
 		</form>
 		
-		<br/><br/><br/><br/><br/>
 	</body>
 </html>
