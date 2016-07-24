@@ -184,15 +184,28 @@ class Book_info(models.Model):
 	def GetbooksbyNewDate():
 		results = []
 		tempc = Book_info.objects.order_by("-bookyear")
-		for i in range(10):
-			results.append(tempc[i])
-		return results
+		number = 0
+		for i in range(30):
+			if Book_info.Is_Exist(results,tempc[i]) == 0:
+				results.append(tempc[i])
+				number = number + 1
+			if number == 10:
+				return results
+	def Is_Exist(results,book):
+		for i in results:
+			if i.bookname == book.bookname:
+				return 1
+		return 0
 	def GetbooksbyPoint():
 		results = []
 		tempc = Book_info.objects.order_by("point")
-		for i in range(10):
-			results.append(tempc[i])
-		return results
+		number = 0
+		for i in range(30):
+			if Book_info.Is_Exist(results,tempc[i]) == 0:
+				results.append(tempc[i])
+				number = number + 1
+			if number == 10:
+				return results
 	def GetbookbyId(id_name):
 		return Book_info.objects.get(id = id_name)
 	def Sortbypoint(objects_name):
