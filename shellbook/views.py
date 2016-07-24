@@ -9,12 +9,25 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 def home(request):
-	if len(request.GET) == 0:
-		return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
+	if request.GET:
+		if len(request.GET) == 0:
+			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
+		elif len(request.GET) > 0:
+			a = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
+			return render(request,'book.html',{'bookobject':a})
 	else:
-		a = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
-		return render(request,'book.html',{'bookobject':a})
-	
+		if len(request.POST) == 0:
+			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
+		else:
+			if request.POST['select'] == "书名":
+				a = Book_info.GetbooksbyBookname(request.POST['search'])
+				return render(request, 'searchresults.html', {'books': a}) 
+			elif request.POST['select'] == "作者":
+				a = Book_info.GetbooksbyWriter(request.POST['search'])
+				return render(request, 'searchresults.html', {'books': a})
+			elif request.POST['select'] == "类别":
+				a = Book_info.GetbooksbyClassification(request.POST['search'])
+				return render(request, 'searchresults.html', {'books': a})				
 
 @csrf_protect
 def userregister(request):

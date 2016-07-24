@@ -403,12 +403,12 @@
 		<form method = "POST">
 			{% csrf_token %}
 		<div class = "search">搜索图书 :
-			<select name = "gender" id= "selectbooks">
+			<select name = "select" id= "selectbooks">
 				<option style="width:200px" selected = "selected">书名</option>
 				<option style="width:200px">作者</option>
 				<option style="width:200px">类别</option>
 			</select>
-			<input id = "search"><div id = "searchbutton" onclick="window.location.href='register'">搜索</div>
+			<input id = "search" name = "search"><input type = "submit" id = "searchbutton" value = "搜索">
 		</div>
 		</form>
 		<div class = "NewBooks" align="center">
