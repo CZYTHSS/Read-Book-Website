@@ -417,8 +417,8 @@
 			
 			{% for book in books %}
 				<div class = "NewBook" >
-					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}"><img src = "{{book.bookcover}}"/></a><br/>
-					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}"><font size="5">{{ book.bookname }}</font></a></b><br/><br/>
+					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><img src = "{{book.bookcover}}"/></a><br/>
+					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><font size="5">{{ book.bookname }}</font></a></b><br/><br/>
 					<font size="3">{{ book.bookwriter }}<font>
 					<p>{{book.bookyear}}</p>
 				</div>
