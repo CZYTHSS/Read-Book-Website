@@ -242,30 +242,58 @@ class Book_info(models.Model):
 		
 
 class User_Book_Info(models.Model):
-	userid = models.IntegerField()
-	bookid = models.IntegerField()
+	username = models.CharField(max_length = 100)
+	bookname = models.CharField(max_length = 100)
 	status = models.IntegerField()
-	point = models.DateField(default = date.today)
+	point = models.IntegerField()
 	
 class User_Relationship(models.Model):
-	user1_id = models.IntegerField()
-	user2_id = models.IntegerField()
+	username1 = models.CharField(max_length = 100)
+	username2 = models.CharField(max_length = 100)
+	def AddFriend(muser1,muser2):
+		a = User_Relationship(username1 = muser1,username2 = muser2)
+		a.save()
+	def FindFriends(user1):
+		a = Message_Record.objects.filter(username1 = user1)
+		return a
+	def DeleteFriends(user1,user2):
+		a = Message_Record.objects.filter(username1 = user1,username2 = user2)
+		a.delete()
+	def SearchFriend(user):
+		a = Personal_info.objects.filter(nickname = user)
+		return a
 	
 class Message_Record(models.Model):
-	user1_id = models.IntegerField()
-	user2_id = models.IntegerField()
+	username1 = models.CharField(max_length = 100)
+	username2 = models.CharField(max_length = 100)
 	message = models.CharField(max_length = 100)
-	date = models.DateField(default = date.today)
+	date = models.CharField(max_length = 100)
+	def StoreMessage(musername1,musername2,mmessage):
+		a = Message_Record(username1 = musername1,username2 = musername2,message = mmessage,data = str(datetime.datetime.fromtimestamp(time.time())))
+		a.save()
+	def FindMessage(user):
+		a = Message_Record.objects.filter(username1 = user)
+		b = Message_Record.objects.filter(username2 = user)
+		return a + b
 	
 class Book_Review(models.Model):
 	bookname = models.CharField(max_length = 100)
 	username = models.CharField(max_length = 100)
+	nickname = models.CharField(max_length = 100)
 	comment = models.CharField(max_length = 100)
 	time = models.CharField(max_length = 100)
+	photo =  models.ImageField(upload_to = 'upload')
 	def StoreComment(mbookname,musername,mcomment):
-		a = Book_Review(bookname = mbookname,username = musername,comment = mcomment,time = str(datetime.datetime.fromtimestamp(time.time())))
+		b = Personal_info.objects.filter(username = musername)
+		if b[0].photo == "":
+			a = Book_Review(bookname = mbookname,username = musername,nickname = b[0].nickname,comment = mcomment,time = str(datetime.datetime.fromtimestamp(time.time())),photo = "")
+		else:
+			a = Book_Review(bookname = mbookname,username = musername,nickname = b[0].nickname,comment = mcomment,time = str(datetime.datetime.fromtimestamp(time.time())),photo = b[0].photo)
 		a.save()
 	def FindBookReview(mbookname):
+		a = Book_Review.objects.filter(bookname = mbookname)
+		return a
+	def GetCommentsBybookname(mbookname):
 		a = Book_Review.objects.filter(bookname = mbookname)
 		return a
 
@@ -307,6 +335,11 @@ class Personal_info(models.Model):
 			a.gender = 1
 		a.photo = mimg
 		a.save()
+		b = Book_Review.objects.filter(username = musername)
+		for i in b:
+			i.photo = mimg
+			i.nickname = mnickname
+			i.save()
 	def GetUserByName(musername):
 		return Personal_info.objects.get(username = musername)
 		
