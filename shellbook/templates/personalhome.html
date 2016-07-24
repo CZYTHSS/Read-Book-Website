@@ -1,0 +1,247 @@
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>读书</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+		<style type = "text/css">
+			.mainContent{
+				width: 100%;
+				height: 440px;
+			}
+			#bg {   
+				position:absolute;    
+				top:0;    
+				left:0;    
+				width:100%;
+				height:440px;
+			}
+			#bg img{
+				position:absolute;    
+				left:0;    
+				right:0;    
+				bottom:0;    
+				margin:auto;    
+				width:100%;   
+				height:440px;   
+				z-index:-1;
+			}
+			#navBar{
+				position:relative;
+				width:100%;
+				height:18%;
+			}
+			#masthead{
+				height:82%;
+				width:100%;
+			}
+			#logo{
+				width:15%;
+				height:100%;
+				font-size:1vw;			/*防止放缩时排版太诡异，字体大小改为相对值 */
+				font-family:"华文新魏";
+				color:gray;
+				margin-left:15%;
+				z-index:100;
+				margin-top:8px;
+				float:left;
+			}
+			#login{
+				margin-left:60%;
+				margin-top:50px;
+				font-size:20px;
+				float:left;
+			}
+			#register{
+				margin-left:5px;
+				margin-top:50px;
+				font-size:20px;
+				float:left;
+			}
+			#headline{
+				width:70%;
+				height:100%;
+				margin:0 auto;
+				z-index:100;
+			}
+			#headline img{
+				margin-left:11%;
+				margin-top:5%;
+			}
+			.NewBooks{
+				width:60%;
+				height:850px;
+			}
+			#section1{
+				width:100%;
+			}
+			.NewBook{
+				width:20%;
+				height:46%;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				float:left;
+			}
+			.NewBook img{
+				width:98%;
+				height:75%;
+			}
+			.LoginBar{
+				text-align:center
+			}
+			.ClickButton{
+				margin-left:1%;
+				font-size:20px;
+				float:left;
+				background-color: #a5b8da;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+				background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: linear-gradient(top, #a5b8da, #7089b3);
+				border-top: 1px solid #758fba;
+				border-right: 1px solid #6c84ab;
+				border-bottom: 1px solid #5c6f91;
+				border-left: 1px solid #6c84ab;
+				border-radius: 18px;
+				-webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+				box-shadow: inset 0 1px 0 0 #aec3e5;
+				color: #fff;
+				font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+				padding: 8px 0;
+				text-align: center;
+				text-shadow: 0 -1px 1px #64799e;
+				text-transform: uppercase;
+				width: 100px;
+			}
+			.ClickButton:hover {
+				background-color: #9badcc;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+				background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+				background-image: linear-gradient(top, #9badcc, #687fa6);
+				border-top: 1px solid #6d86ad;
+				border-right: 1px solid #647a9e;
+				border-bottom: 1px solid #546685;
+				border-left: 1px solid #647a9e;
+				-webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+				box-shadow: inset 0 1px 0 0 #a5b9d9;
+				cursor: pointer; }
+			.ClickButton:active {
+				border: 1px solid #546685;
+				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
+			#personal_info {
+				font-family:"华文新魏";
+				font-size:20px;
+				width:40%;
+				height:500px;
+				margin:0 auto;
+				border-style: solid;
+				border-color: gray;
+			}
+			#inlinetext{
+				margin-left:40%;
+			}
+			#username{
+				margin-top:5px;
+				margin-left:30px;
+				font-size:20px;
+				font-family:"华文新魏";
+				font-weight:bold;
+				float:left;
+			}
+		</style>
+	</head>
+
+	<body>
+	<script>
+	function hide1()
+	{
+		var a = document.getElementById('personal_info');
+		a.style.display = "block"
+		var b = document.getElementById('friendslist');
+		var c = document.getElementById('message');
+		b.style.display = "none"
+		c.style.display = "none"
+	}
+	
+	function hide2()
+	{
+		var a = document.getElementById('friendslist');
+		a.style.display = "block"
+		var b = document.getElementById('personal_info');
+		var c = document.getElementById('message');
+		b.style.display = "none"
+		c.style.display = "none"
+	}
+	
+	function hide3()
+	{
+		var a = document.getElementById('message');
+		a.style.display = "block"
+		var b = document.getElementById('friendslist');
+		var c = document.getElementById('personal_info');
+		b.style.display = "none"
+		c.style.display = "none"
+	}
+	</script>
+	
+	
+		<div class="mainContent">
+			<div id="bg">  
+				<img src='/static/webwxgetmsgimg.jpg' alt="">  
+			</div>
+			<div id="navBar">
+				<div id="logo">
+					<h1>贝壳读书</h1>
+				</div>
+			</div>
+			<div id="masthead">
+				<div id="headline">
+					<img alt="Meet your next favorite book." src="https://s.gr-assets.com/assets/home/headline-e2cd420e71737ff2815d09af5b65c4e4.png">
+				</div>
+			</div>
+		</div>
+		<form method = "POST" enctype="multipart/form-data">
+			{% csrf_token %}
+		<input id = "username" name = "userinfo" value = "{{username}}">
+		<span  class="ClickButton" onclick="hide1()">个人信息</span>
+		<span  class="ClickButton" onclick="hide2()">好友</span>
+		<span  class="ClickButton" onclick="hide3()">私信</span><br/><br/>
+		<hr/>
+			<div id = "personal_info">
+			<br/><br/>
+				<div id = "inlinetext">
+					头像:<image src = "{{img}}" width = 100px height = 100px/><br/><br/>
+					<input type = "file" name = "img" value = "上传头像" align = "center"><br/><br/>
+					昵称: <input type="text" name="nickname" size="12" maxlength="20" style="height:25px;" value = "{{nickname}}"><br><br>
+					性别: <select name = "gender">
+						{% if gender == 0 %}
+							<option style="width:200px" selected = "selected">男</option>
+							<option style="width:200px">女</option>
+						{% else %}
+							<option style="width:200px" >男</option>
+							<option style="width:200px" selected = "selected">女</option>
+						{% endif %}
+					</select>
+					<br><br>
+					地区: <input type="text" name="region" size="8" maxlength="50" style="height:25px;" value = "{{region}}"><br><br>
+					个人介绍:<br/><br/><textarea name="introduce" cols="20" rows="5">{{introduce}}</textarea>
+				</div>
+			</div>
+			<br/>
+			<input type = "submit" class="ClickButton" style="float:left;position:relative;left:47%;" value = "保存修改">
+		</form>
+		<div id = "friendslist" style = "display:none">
+		<p>null</p>
+		</div>
+		<div id = "message" style = "display:none">
+		<p>null</p>
+		</div>		
+	</body>
+</html>

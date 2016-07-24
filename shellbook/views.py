@@ -5,43 +5,59 @@ from django.http import HttpResponse
 from .forms import AddUserForm
 from shellbook.models import Personal_info
 from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def home(request):
-	class book:
-		def __init__(self):
-			book.name = ""
-			book.author = ""
-			book.date = ""
-	book1 = book()
-	book1.name = "三重门"
-	book1.author = "韩寒"
-	book1.date = "2003-09"
-	book2 = book()
-	book2.name = "三重门"
-	book2.author = "韩寒"
-	book2.date = "2003-09"
-	book3 = book()
-	book3.name = "三重门"
-	book3.author = "韩寒"
-	book3.date = "2003-09"
-	book4 = book()
-	book4.name = "三重门"
-	book4.author = "韩寒"
-	book4.date = "2003-09"
-	book5 = book()
-	book5.name = "三重门"
-	book5.author = "韩寒"
-	book5.date = "2003-09"
-	books = [book1,book2,book3,book4,book5]
-	return render(request, 'home.html', {'books': books}) 
+	if len(request.GET) == 0:
+		return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
+	else:
+		a = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
+		return render(request,'book.html',{'bookobject':a})
+	
 
 @csrf_protect
 def userregister(request):
 	if request.POST:   # 当提交表单时     
 		a = request.POST['username']
 		b = request.POST['userpassword']
-		Personal_info.MAddUser(a,b)
-		return HttpResponse('hello')
+		if Personal_info.MAddUser(a,b) == 0:
+			return render(request, 'user_registration.html', {'flag': 0})
+		else:
+			return HttpResponseRedirect("../login/")
 	else:# 当正常访问时
 		return render(request, 'user_registration.html')
+def userlogin(request):
+	if request.POST:   # 当提交表单时  
+		print(request.POST)
+		a = request.POST['username']
+		b = request.POST['userpassword']
+		if Personal_info.VerifyLogin(a,b) == 1:
+			return render(request, 'home.html', {'flag': 1, 'username': a, 'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
+		else:
+			return render(request, 'user_login.html',{'flag': 0})
+	else:# 当正常访问时
+		return render(request, 'user_login.html')
+def userinfo(request):
+	if request.POST:   # 当提交表单时
+		a = request.POST['nickname']
+		b = request.POST['region']
+		c = request.POST['introduce']
+		d = request.POST['userinfo']
+		e = request.POST['gender']
+		f = request.FILES['img']
+		Personal_info.Changeuserinfo(d,a,b,c,e,f)
+		print(Personal_info.GetUserByName(d).gender)
+		return render(request, 'personalhome.html',{'username':d,
+				'nickname':Personal_info.GetUserByName(d).nickname,
+				'region':Personal_info.GetUserByName(d).region,
+				'introduce':Personal_info.GetUserByName(d).introduce,
+				'gender':Personal_info.GetUserByName(d).gender,
+				'img':Personal_info.GetUserByName(d).photo.url})
+	mname = str(request.GET['username'])
+	return render(request, 'personalhome.html',{'username':mname,
+				'nickname':Personal_info.GetUserByName(mname).nickname,
+				'region':Personal_info.GetUserByName(mname).region,
+				'introduce':Personal_info.GetUserByName(mname).introduce,
+				'gender':Personal_info.GetUserByName(mname).gender,
+				'img':Personal_info.GetUserByName(mname).photo.url})
