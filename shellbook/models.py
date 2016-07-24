@@ -173,7 +173,8 @@ class Book_info(models.Model):
 		for i in Book_info.objects.all():
 			match = regex.search(i.classification)
 			if match:
-				results.append(i)
+				if Book_info.Is_Exist(results,i) == 0:
+					results.append(i)
 		return results
 	def GetbooksbyDate(year_name):
 		results = []
@@ -225,7 +226,8 @@ class Book_info(models.Model):
 		for i in Book_info.objects.all():
 			match = regex.search(i.bookname)
 			if match:
-				results.append(i)
+				if Book_info.Is_Exist(results,i) == 0:
+					results.append(i)
 		return results
 	def GetbooksbyWriter(writer_name):
 		results = []
@@ -234,7 +236,8 @@ class Book_info(models.Model):
 		for i in Book_info.objects.all():
 			match = regex.search(i.bookwriter)
 			if match:
-				results.append(i)
+				if Book_info.Is_Exist(results,i) == 0:
+					results.append(i)
 		return results
 		
 
