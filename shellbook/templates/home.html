@@ -254,7 +254,7 @@
 			}
 			.NewBooks{
 				width:70%;
-				height:850px;
+				height:900px;
 				text-align:center;
 				padding-left:15%;
 				padding-right:15%;
@@ -266,7 +266,7 @@
 			}
 			.NewBook{
 				width:18%;
-				height:46%;
+				height:44%;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
@@ -277,12 +277,12 @@
 				font-family:"华文新魏","Arial Narrow";
 			}
 			.NewBook img{
-				width:95%;
-				height:75%;
+				width:92%;
+				height:72%;
 			}
 			.HotBooks{
 				width:70%;
-				height:850px;
+				height:900px;
 				padding-left:15%;
 				padding-right:15%;
 			}
@@ -293,7 +293,7 @@
 			}
 			.HotBook{
 				width:18%;
-				height:46%;
+				height:44%;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
@@ -303,8 +303,8 @@
 				font-family:"华文新魏","Arial Narrow";
 			}
 			.HotBook img{
-				width:95%;
-				height:75%;
+				width:92%;
+				height:72%;
 			}
 			.search{
 				font-family:"华文新魏";
@@ -400,6 +400,8 @@
 				</div>
 			</div>
 		</div>
+		<form method = "POST">
+			{% csrf_token %}
 		<div class = "search">搜索图书 :
 			<select name = "gender" id= "selectbooks">
 				<option style="width:200px" selected = "selected">书名</option>
@@ -408,6 +410,7 @@
 			</select>
 			<input id = "search"><div id = "searchbutton" onclick="window.location.href='register'">搜索</div>
 		</div>
+		</form>
 		<div class = "NewBooks" align="center">
 			<div id = "section1"><h1>新书速递</h1></div>
 			<hr />
