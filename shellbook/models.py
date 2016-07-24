@@ -285,10 +285,12 @@ class Book_Review(models.Model):
 	photo =  models.ImageField(upload_to = 'upload')
 	def StoreComment(mbookname,musername,mcomment):
 		b = Personal_info.objects.filter(username = musername)
+		c = str(datetime.datetime.fromtimestamp(time.time()))
+		d = c.split('.')[0]
 		if b[0].photo == "":
-			a = Book_Review(bookname = mbookname,username = musername,nickname = b[0].nickname,comment = mcomment,time = str(datetime.datetime.fromtimestamp(time.time())),photo = "")
+			a = Book_Review(bookname = mbookname,username = musername,nickname = b[0].nickname,comment = mcomment,time = d,photo = "")
 		else:
-			a = Book_Review(bookname = mbookname,username = musername,nickname = b[0].nickname,comment = mcomment,time = str(datetime.datetime.fromtimestamp(time.time())),photo = b[0].photo)
+			a = Book_Review(bookname = mbookname,username = musername,nickname = b[0].nickname,comment = mcomment,time = d,photo = b[0].photo)
 		a.save()
 	def FindBookReview(mbookname):
 		a = Book_Review.objects.filter(bookname = mbookname)
