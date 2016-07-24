@@ -583,6 +583,7 @@
 				float:left;
 				border-radius:10px;
 			}
+			#notice{margin-bottom:100px;}
 		</style>
 	</head>
 
@@ -650,12 +651,18 @@
 						<div id = "time">发表于{{review.time}}</div>
 					</div>
 				{% endfor %}
+				{% if comment %}
+				{% else %}
+				<div id = "notice" align = center><font size = 5>这本书还没有用户评论哦，快来评论吧！</font></div>
+				{% endif %}
 			</div>
+			{% if username != "" %}
 			<div class="comment">
 				<textarea id = "introduce" name="comment" cols="80%" rows="5"></textarea>
 				<input type = "submit" class="ClickButton" value = "发表评论">
 			</div>
-		</form>
+			{% endif %}
+			</form>
 		
 	</body>
 </html>
