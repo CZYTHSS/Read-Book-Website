@@ -282,7 +282,7 @@
 				height:80%;
 			}
 			.BookInfo {
-				float:left;
+				height:50%;
 			}
 			.BookLabel {
 				font-family:"宋体";
@@ -299,6 +299,9 @@
 				cursor: pointer;
 			}
 			.comment {
+				width:50%;
+				padding-left:25%;
+				padding-right:25%;
 				font-family:"华文新魏";
 			}
 			#login{
@@ -497,6 +500,22 @@
 				font-weight:bold;
 				float:left;
 			}
+			#review{
+				width:50%;
+				padding-left:25%;
+				padding-right:25%;
+				font-family:"华文新魏";
+			}
+			.singlereview{
+				border: 1px solid #546685;
+				width:100%;
+				height:80px;
+			}
+			.portraitbox{position: relative;height: 50px;background-size: cover;margin: 0 10px;width: 50px}
+			.portrait{margin-top:5px;height: 50px;width: 50px}
+			.nickname{font-family: "华文新魏"; font-size: 10px; width: 100%;text-align: center;overflow: hidden}
+			.content{font-family: "华文新魏"; overflow: hidden; font-size: 20px; height: 50px}
+			.border{width: 80px;float:left;}
 		</style>
 	</head>
 
@@ -526,10 +545,9 @@
 		</div>
 		<div id = "section1" align="center"><h1>详细信息</h1></div>
 			<hr />
-		<div class = "NewBooks" >	
+		<div class = "NewBooks" >
 			<b><font size="6">{{ bookobject.bookname }}</font></b><br/><br/>
 			
-			<div>
 			<div class = "NewBook" >
 				<img src = "{{bookobject.bookcover}}"/><br/>
 			</div>
@@ -545,15 +563,31 @@
 				<p><span class="BookLabel">四星评价数：</span>{{bookobject.fourpoint}}</p>
 				<p><span class="BookLabel">五星评价数：</span>{{bookobject.fivepoint}}</p>
 			</div>
-			</div>
+		</div>
 		<form method = "POST">
 			{% csrf_token %}
+			<div id = "review">
+				<div id = "review_section">用户评论</div>
+				<hr />
+				{% for review in comment %}
+					<div class = "singlereview" >
+						<div class = "border">
+							{% if review.photo == "" %}
+								<div class="portraitbox"><img class="portrait" src="http://127.0.0.1:8000/media/upload/desert.jpg"/></div>
+							{% else %}
+								<div class="portraitbox"><img class="portrait" src="{{review.photo.url}}"/></div>
+							{% endif %}
+							<div class="nickname">{{review.nickname}}</div>
+						</div>
+					</div>
+					<div class="content">{{review.comment}}</div>
+				{% endfor %}
+			</div>
 			<div class="comment">
-				<textarea id = "introduce" name="comment" cols="100%" rows="5"></textarea>
+				<textarea id = "introduce" name="comment" cols="80%" rows="5"></textarea>
 				<input type = "submit" value = "发布" name = "submit">
 			</div>
 		</form>
-		</div>
 		
 		<br/><br/><br/><br/><br/>
 	</body>
