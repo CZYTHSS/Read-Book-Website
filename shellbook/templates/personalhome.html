@@ -222,7 +222,7 @@
 		</div>
 		<form method = "POST" enctype="multipart/form-data">
 			{% csrf_token %}
-		<input id = "username" name = "userinfo" value = "{{username}}">
+		<div id = "username">{{username}}</div> 
 		<span  class="ClickButton" onclick="hide1()">个人信息</span>
 		<span  class="ClickButton" onclick="hide2()">好友</span>
 		<span  class="ClickButton" onclick="hide3()">私信</span><br/><br/>
@@ -250,6 +250,7 @@
 			<br/>
 			<input type = "submit" class="ClickButton" style="float:left;position:relative;left:47%;" value = "保存修改">
 			<br/><br/>
+			<input name = "userinfo" value = "{{username}}" style = "display:none">
 		</form>
 		<div id = "friendslist" style = "display:none">
 		<p>null</p>
