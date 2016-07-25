@@ -135,6 +135,51 @@
 				border: 1px solid #546685;
 				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
 				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
+			.addfriend{
+				font-size:20px;
+				margin-top:5px;
+				float:right;
+				background-color: #a5b8da;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+				background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: linear-gradient(top, #a5b8da, #7089b3);
+				border-top: 1px solid #758fba;
+				border-right: 1px solid #6c84ab;
+				border-bottom: 1px solid #5c6f91;
+				border-left: 1px solid #6c84ab;
+				border-radius: 18px;
+				-webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+				box-shadow: inset 0 1px 0 0 #aec3e5;
+				color: #fff;
+				font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+				padding: 8px 0;
+				text-align: center;
+				text-shadow: 0 -1px 1px #64799e;
+				text-transform: uppercase;
+				width: 100px;
+			}
+			.addfriend:hover {
+				background-color: #9badcc;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+				background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+				background-image: linear-gradient(top, #9badcc, #687fa6);
+				border-top: 1px solid #6d86ad;
+				border-right: 1px solid #647a9e;
+				border-bottom: 1px solid #546685;
+				border-left: 1px solid #647a9e;
+				-webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+				box-shadow: inset 0 1px 0 0 #a5b9d9;
+				cursor: pointer; }
+			.addfriend:active {
+				border: 1px solid #546685;
+				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
 			#personal_info {
 				font-family:"华文新魏";
 				font-size:20px;
@@ -168,6 +213,40 @@
 				border-color:#7C4DFF;
 				border-width:3px;
 			}
+			#myfriends{
+				width:50%;
+				padding-left:25%;
+				padding-right:25%;
+				font-family:"华文新魏";
+			}
+			#friend_section{
+				font-size:35px;
+				text-align:center;
+			}
+			#newfriend{
+				margin-top:10px;
+				border: 3px solid gray;
+				width:100%;
+				height:105px;
+				border-radius:10px;
+			}
+			.searchlabel{
+				width:50%;
+				height:40px;
+				padding-left:25%;
+				padding-right:25%;
+				font-family:"华文新魏";
+			}
+			#search_friends{
+				width:75%;
+				height:40px;
+				font-family:"华文新魏";
+				float:left;
+			}
+			#temp{float:left;font-family:"华文新魏";font-size:25px;line-height:50px;}
+			#headportrait{float:left}
+			#headportrait img{margin-top:10px;height: 80px;width: 80px;border:1px solid black;margin-left:30px;float:left}
+			.friendinfo{font-family: "微软雅黑"; font-size: 20px; float:left;overflow: hidden;text-overflow: ellipsis;margin-left:3%;margin-top:30px;font-weight:bold}
 		</style>
 	</head>
 
@@ -255,13 +334,34 @@
 		<div id = "friendslist" style = "display:none">
 		<form method = "POST">
 			{% csrf_token %}
-		<input type = "text" name = "friends">
-		<input type = "submit" name = "add" value = "添加好友">
+		<div class = "searchlabel">
+			<div id = "temp">搜索用户：</div>
+			<input id = "search_friends" type = "text" name = "friends">
+			<input class = "addfriend" type = "submit" name = "add" value = "添加好友">
+		</div>
 		<input type = "text" name = 'username' value = '{{username}}' style = "display:none">
 		</form>
-		{% for friend in friends %}
-			<div>{{friend.nickname}}</div>
-		{% endfor %}
+		<div id = "myfriends">
+			<div id = "friend_section">我的好友</div>
+			<hr />
+			{% for friend in friends %}
+			<div id = "newfriend">
+				{% if friend.photo != "" %}
+				<div id = "headportrait"><img src = "{{friend.photo.url}}" /></div>
+				{% else %}
+				<div id = "headportrait"><img src = "http://127.0.0.1:8000/media/upload/desert.jpg" /></div>
+				{% endif %}
+				<div class = "friendinfo">用户名：{{friend.username}}</div>
+				<div class = "friendinfo">昵称：{{friend.nickname}}</div>
+				{% if friend.gender == 0 %}
+				<div class = "friendinfo">性别：女</div>
+				{% else %}
+				<div class = "friendinfo">性别：男</div>
+				{% endif %}
+				<div class = "friendinfo">地区：{{friend.region}}</div>
+			</div>
+			{% endfor %}
+		</div>
 		</div>
 		<div id = "message" style = "display:none">
 		<p>null</p>
