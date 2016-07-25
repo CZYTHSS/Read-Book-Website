@@ -254,10 +254,10 @@ class User_Relationship(models.Model):
 		a = User_Relationship(username1 = muser1,username2 = muser2)
 		a.save()
 	def FindFriends(user1):
-		a = Message_Record.objects.filter(username1 = user1)
+		a = User_Relationship.objects.filter(username1 = user1)
 		return a
 	def DeleteFriends(user1,user2):
-		a = Message_Record.objects.filter(username1 = user1,username2 = user2)
+		a = User_Relationship.objects.filter(username1 = user1,username2 = user2)
 		a.delete()
 	def SearchFriend(user):
 		a = Personal_info.objects.filter(nickname = user)
@@ -335,7 +335,13 @@ class Personal_info(models.Model):
 			a.gender = 0
 		else:
 			a.gender = 1
-		a.photo = mimg
+		if a.photo == "":
+			a.photo = mimg
+		else:
+			if mimg == "":
+				i = 1
+			else:
+				a.photo = mimg
 		a.save()
 		b = Book_Review.objects.filter(username = musername)
 		for i in b:
@@ -344,6 +350,8 @@ class Personal_info(models.Model):
 			i.save()
 	def GetUserByName(musername):
 		return Personal_info.objects.get(username = musername)
+	def GetUsersByName(nick):
+		return Personal_info.objects.filter(username = nick)
 		
 		
 	

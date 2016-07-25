@@ -7,6 +7,7 @@ from shellbook.models import Personal_info
 from shellbook.models import Book_Review
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
+from shellbook.models import User_Relationship
 
 # Create your views here.
 def home(request):
@@ -70,44 +71,84 @@ def userlogin(request):
 	else:# 当正常访问时
 		return render(request, 'user_login.html')
 def userinfo(request):
-	if request.POST:   # 当提交表单时
-		a = request.POST['nickname']
-		b = request.POST['region']
-		c = request.POST['introduce']
-		d = request.POST['userinfo']
-		e = request.POST['gender']
-		if len(request.FILES) == 1:
-			f = request.FILES['img']
-			Personal_info.Changeuserinfo(d,a,b,c,e,f)
-			print(Personal_info.GetUserByName(d).gender)
-			return render(request, 'personalhome.html',{'username':d,
-				'nickname':Personal_info.GetUserByName(d).nickname,
-				'region':Personal_info.GetUserByName(d).region,
-				'introduce':Personal_info.GetUserByName(d).introduce,
-				'gender':Personal_info.GetUserByName(d).gender,
-				'img':Personal_info.GetUserByName(d).photo.url})
-		else:
-			f = ""
-			Personal_info.Changeuserinfo(d,a,b,c,e,f)
-			print(Personal_info.GetUserByName(d).gender)
-			return render(request, 'personalhome.html',{'username':d,
-				'nickname':Personal_info.GetUserByName(d).nickname,
-				'region':Personal_info.GetUserByName(d).region,
-				'introduce':Personal_info.GetUserByName(d).introduce,
-				'gender':Personal_info.GetUserByName(d).gender,
-				'img':"http://127.0.0.1:8000/media/upload/desert.jpg"})
+	if request.POST:
+		if len(request.POST) == 7:# 当提交表单时
+			a = request.POST['nickname']
+			b = request.POST['region']
+			c = request.POST['introduce']
+			d = request.POST['userinfo']
+			e = request.POST['gender']
+			friends = User_Relationship.FindFriends(d)
+			results = []
+			for friend in friends:
+				results.append(Personal_info.objects.get(username = friend.username2))
+			print(results)
+			if len(request.FILES) == 1:
+				f = request.FILES['img']
+				Personal_info.Changeuserinfo(d,a,b,c,e,f)
+				return render(request, 'personalhome.html',{'username':d,
+					'nickname':Personal_info.GetUserByName(d).nickname,
+					'region':Personal_info.GetUserByName(d).region,
+					'introduce':Personal_info.GetUserByName(d).introduce,
+					'gender':Personal_info.GetUserByName(d).gender,
+					'img':Personal_info.GetUserByName(d).photo.url,
+					'friends':results})
+			else:
+				f = ""
+				Personal_info.Changeuserinfo(d,a,b,c,e,f)
+				return render(request, 'personalhome.html',{'username':d,
+					'nickname':Personal_info.GetUserByName(d).nickname,
+					'region':Personal_info.GetUserByName(d).region,
+					'introduce':Personal_info.GetUserByName(d).introduce,
+					'gender':Personal_info.GetUserByName(d).gender,
+					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
+					'friends':results})
+		elif len(request.POST) == 4:
+			a = request.POST['friends']
+			b = request.POST['username']
+			User_Relationship.AddFriend(b,a)
+			friends = User_Relationship.FindFriends(b)
+			results = []
+			for friend in friends:
+				results.append(Personal_info.objects.get(username = friend.username2))
+			print(results)
+			if Personal_info.objects.get(username = b).photo == "":
+				return render(request, 'personalhome.html',{'username':b,
+					'nickname':Personal_info.GetUserByName(b).nickname,
+					'region':Personal_info.GetUserByName(b).region,
+					'introduce':Personal_info.GetUserByName(b).introduce,
+					'gender':Personal_info.GetUserByName(b).gender,
+					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
+					'friends':results})
+			else:
+				return render(request, 'personalhome.html',{'username':b,
+					'nickname':Personal_info.GetUserByName(b).nickname,
+					'region':Personal_info.GetUserByName(b).region,
+					'introduce':Personal_info.GetUserByName(b).introduce,
+					'gender':Personal_info.GetUserByName(b).gender,
+					'img':Personal_info.GetUserByName(b).photo.url,
+					'friends':results})
+			
+			
 	mname = str(request.GET['username'])
+	friends = User_Relationship.FindFriends(mname)
+	results = []
+	for friend in friends:
+		results.append(Personal_info.objects.get(username = friend.username2))
+	print(results)
 	if Personal_info.GetUserByName(mname).photo == "":
 		return render(request, 'personalhome.html',{'username':mname,
 				'nickname':Personal_info.GetUserByName(mname).nickname,
 				'region':Personal_info.GetUserByName(mname).region,
 				'introduce':Personal_info.GetUserByName(mname).introduce,
 				'gender':Personal_info.GetUserByName(mname).gender,
-				'img':"http://127.0.0.1:8000/media/upload/desert.jpg"})
+				'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
+				'friends':results})
 	else:
 		return render(request, 'personalhome.html',{'username':mname,
 				'nickname':Personal_info.GetUserByName(mname).nickname,
 				'region':Personal_info.GetUserByName(mname).region,
 				'introduce':Personal_info.GetUserByName(mname).introduce,
 				'gender':Personal_info.GetUserByName(mname).gender,
-				'img':Personal_info.GetUserByName(mname).photo.url})
+				'img':Personal_info.GetUserByName(mname).photo.url,
+				'friends':results})
