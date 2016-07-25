@@ -71,8 +71,10 @@ def userlogin(request):
 	else:# 当正常访问时
 		return render(request, 'user_login.html')
 def userinfo(request):
+	print(request.POST)
+	print(1)
 	if request.POST:
-		if len(request.POST) == 7:# 当提交表单时
+		if len(request.POST) == 6:# 当提交表单时
 			a = request.POST['nickname']
 			b = request.POST['region']
 			c = request.POST['introduce']
@@ -82,7 +84,6 @@ def userinfo(request):
 			results = []
 			for friend in friends:
 				results.append(Personal_info.objects.get(username = friend.username2))
-			print(results)
 			if len(request.FILES) == 1:
 				f = request.FILES['img']
 				Personal_info.Changeuserinfo(d,a,b,c,e,f)
@@ -111,7 +112,6 @@ def userinfo(request):
 			results = []
 			for friend in friends:
 				results.append(Personal_info.objects.get(username = friend.username2))
-			print(results)
 			if Personal_info.objects.get(username = b).photo == "":
 				return render(request, 'personalhome.html',{'username':b,
 					'nickname':Personal_info.GetUserByName(b).nickname,
@@ -135,7 +135,6 @@ def userinfo(request):
 	results = []
 	for friend in friends:
 		results.append(Personal_info.objects.get(username = friend.username2))
-	print(results)
 	if Personal_info.GetUserByName(mname).photo == "":
 		return render(request, 'personalhome.html',{'username':mname,
 				'nickname':Personal_info.GetUserByName(mname).nickname,
