@@ -94,7 +94,8 @@ def userinfo(request):
 					'introduce':Personal_info.GetUserByName(d).introduce,
 					'gender':Personal_info.GetUserByName(d).gender,
 					'img':Personal_info.GetUserByName(d).photo.url,
-					'friends':results})
+					'friends':results,
+					'message':message})
 			else:
 				f = ""
 				Personal_info.Changeuserinfo(d,a,b,c,e,f)
@@ -104,7 +105,8 @@ def userinfo(request):
 					'introduce':Personal_info.GetUserByName(d).introduce,
 					'gender':Personal_info.GetUserByName(d).gender,
 					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
-					'friends':results})
+					'friends':results,
+					'message':message})
 		elif len(request.POST) == 4:
 			a = request.POST['friends']
 			b = request.POST['username']
@@ -170,8 +172,6 @@ def userinfo(request):
 		results.append(Personal_info.objects.get(username = friend.username2))
 	message = []
 	message = Message_Record.FindMessage(mname)
-	print(message)
-	print(1)
 	if Personal_info.GetUserByName(mname).photo == "":
 		return render(request, 'personalhome.html',{'username':mname,
 				'nickname':Personal_info.GetUserByName(mname).nickname,

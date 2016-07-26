@@ -5,6 +5,7 @@ from datetime import date
 import re
 import datetime
 import time
+from operator import itemgetter, attrgetter
 
 # Create your models here.
 class Book_info(models.Model):
@@ -283,9 +284,20 @@ class Message_Record(models.Model):
 	def FindMessage(user):
 		a = Message_Record.objects.filter(username1 = user)
 		b = Message_Record.objects.filter(username2 = user)
+		c = []
+		for one in a:
+			c.append(one)
 		for one in b:
-			a.append(one)
-		return a
+			c.append(one)
+		listLength = len(c)
+		while listLength > 0:
+			for i in range(listLength - 1):
+				if c[i].date > c[i + 1].date:
+					t = c[i + 1]
+					c[i + 1] = c[i]
+					c[i] = t
+			listLength -= 1
+		return c
 	
 class Book_Review(models.Model):
 	bookname = models.CharField(max_length = 100)
