@@ -267,11 +267,18 @@ class Message_Record(models.Model):
 	username1 = models.CharField(max_length = 100)
 	username2 = models.CharField(max_length = 100)
 	message = models.CharField(max_length = 100)
+	nickname1 = models.CharField(max_length = 100)
+	photo1 =  models.ImageField(upload_to = 'upload')
+	nickname2 = models.CharField(max_length = 100)
+	photo2 =  models.ImageField(upload_to = 'upload')
 	date = models.CharField(max_length = 100)
 	def StoreMessage(musername1,musername2,mmessage):
 		c = str(datetime.datetime.fromtimestamp(time.time()))
 		d = c.split('.')[0]
-		a = Message_Record(username1 = musername1,username2 = musername2,message = mmessage,date = d)
+		b = Personal_info.objects.filter(username = musername1)
+		e = Personal_info.objects.filter(username = musername2)
+		a = Message_Record(username1 = musername1,username2 = musername2,message = mmessage,
+		nickname1 = b[0].nickname,photo1 = b[0].photo,nickname2 = e[0].nickname,photo2 = e[0].photo,date = d)
 		a.save()
 	def FindMessage(user):
 		a = Message_Record.objects.filter(username1 = user)
@@ -349,8 +356,18 @@ class Personal_info(models.Model):
 		a.save()
 		b = Book_Review.objects.filter(username = musername)
 		for i in b:
-			i.photo = mimg
+			i.photo = a.photo
 			i.nickname = mnickname
+			i.save()
+		c = Message_Record.objects.filter(username1 = musername)
+		for i in c:
+			i.photo1 = a.photo
+			i.nickname1 = mnickname
+			i.save()
+		d = Message_Record.objects.filter(username2 = musername)
+		for i in d:
+			i.photo2 = a.photo
+			i.nickname2 = mnickname
 			i.save()
 	def GetUserByName(musername):
 		return Personal_info.objects.get(username = musername)
