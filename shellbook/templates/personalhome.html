@@ -364,7 +364,19 @@
 		</div>
 		</div>
 		<div id = "message" style = "display:none">
-		<p>null</p>
+		<form method = "POST">
+			{% csrf_token %}
+		<div class = "searchlabel">
+			<div id = "temp">发送至：</div>
+			<input id = "search_friends" type = "text" name = "friend">
+			<input id = "search_friends" type = "text" name = "context">
+			<input class = "addfriend" type = "submit" name = "add" value = "发送">
+		</div>
+		<input type = "text" name = 'username' value = '{{username}}' style = "display:none">
+		</form>
+			{% for i in message %}
+				<div>{{i.message}}</div>
+			{% endfor %}
 		</div>		
 	</body>
 </html>

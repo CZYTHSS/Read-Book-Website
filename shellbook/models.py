@@ -269,12 +269,16 @@ class Message_Record(models.Model):
 	message = models.CharField(max_length = 100)
 	date = models.CharField(max_length = 100)
 	def StoreMessage(musername1,musername2,mmessage):
-		a = Message_Record(username1 = musername1,username2 = musername2,message = mmessage,data = str(datetime.datetime.fromtimestamp(time.time())))
+		c = str(datetime.datetime.fromtimestamp(time.time()))
+		d = c.split('.')[0]
+		a = Message_Record(username1 = musername1,username2 = musername2,message = mmessage,date = d)
 		a.save()
 	def FindMessage(user):
 		a = Message_Record.objects.filter(username1 = user)
 		b = Message_Record.objects.filter(username2 = user)
-		return a + b
+		for one in b:
+			a.append(one)
+		return a
 	
 class Book_Review(models.Model):
 	bookname = models.CharField(max_length = 100)

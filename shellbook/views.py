@@ -8,6 +8,7 @@ from shellbook.models import Book_Review
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 from shellbook.models import User_Relationship
+from shellbook.models import Message_Record
 
 # Create your views here.
 def home(request):
@@ -71,8 +72,6 @@ def userlogin(request):
 	else:# 当正常访问时
 		return render(request, 'user_login.html')
 def userinfo(request):
-	print(request.POST)
-	print(1)
 	if request.POST:
 		if len(request.POST) == 6:# 当提交表单时
 			a = request.POST['nickname']
@@ -84,6 +83,8 @@ def userinfo(request):
 			results = []
 			for friend in friends:
 				results.append(Personal_info.objects.get(username = friend.username2))
+			message = []
+			message = Message_Record.FindMessage(d)
 			if len(request.FILES) == 1:
 				f = request.FILES['img']
 				Personal_info.Changeuserinfo(d,a,b,c,e,f)
@@ -112,6 +113,8 @@ def userinfo(request):
 			results = []
 			for friend in friends:
 				results.append(Personal_info.objects.get(username = friend.username2))
+			message = []
+			message = Message_Record.FindMessage(b)
 			if Personal_info.objects.get(username = b).photo == "":
 				return render(request, 'personalhome.html',{'username':b,
 					'nickname':Personal_info.GetUserByName(b).nickname,
@@ -119,7 +122,8 @@ def userinfo(request):
 					'introduce':Personal_info.GetUserByName(b).introduce,
 					'gender':Personal_info.GetUserByName(b).gender,
 					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
-					'friends':results})
+					'friends':results,
+					'message':message})
 			else:
 				return render(request, 'personalhome.html',{'username':b,
 					'nickname':Personal_info.GetUserByName(b).nickname,
@@ -127,14 +131,47 @@ def userinfo(request):
 					'introduce':Personal_info.GetUserByName(b).introduce,
 					'gender':Personal_info.GetUserByName(b).gender,
 					'img':Personal_info.GetUserByName(b).photo.url,
-					'friends':results})
-			
+					'friends':results,
+					'message':message})
+		elif len(request.POST) == 5:
+			a = request.POST['friend']
+			b = request.POST['username']
+			c = request.POST['context']
+			Message_Record.StoreMessage(b,a,c)
+			friends = User_Relationship.FindFriends(b)
+			results = []
+			for friend in friends:
+				results.append(Personal_info.objects.get(username = friend.username2))
+			message = []
+			message = Message_Record.FindMessage(b)
+			if Personal_info.objects.get(username = b).photo == "":
+				return render(request, 'personalhome.html',{'username':b,
+					'nickname':Personal_info.GetUserByName(b).nickname,
+					'region':Personal_info.GetUserByName(b).region,
+					'introduce':Personal_info.GetUserByName(b).introduce,
+					'gender':Personal_info.GetUserByName(b).gender,
+					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
+					'friends':results,
+					'message':message})
+			else:
+				return render(request, 'personalhome.html',{'username':b,
+					'nickname':Personal_info.GetUserByName(b).nickname,
+					'region':Personal_info.GetUserByName(b).region,
+					'introduce':Personal_info.GetUserByName(b).introduce,
+					'gender':Personal_info.GetUserByName(b).gender,
+					'img':Personal_info.GetUserByName(b).photo.url,
+					'friends':results,
+					'message':message})	
 			
 	mname = str(request.GET['username'])
 	friends = User_Relationship.FindFriends(mname)
 	results = []
 	for friend in friends:
 		results.append(Personal_info.objects.get(username = friend.username2))
+	message = []
+	message = Message_Record.FindMessage(mname)
+	print(message)
+	print(1)
 	if Personal_info.GetUserByName(mname).photo == "":
 		return render(request, 'personalhome.html',{'username':mname,
 				'nickname':Personal_info.GetUserByName(mname).nickname,
@@ -142,7 +179,8 @@ def userinfo(request):
 				'introduce':Personal_info.GetUserByName(mname).introduce,
 				'gender':Personal_info.GetUserByName(mname).gender,
 				'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
-				'friends':results})
+				'friends':results,
+				'message':message})
 	else:
 		return render(request, 'personalhome.html',{'username':mname,
 				'nickname':Personal_info.GetUserByName(mname).nickname,
@@ -150,4 +188,5 @@ def userinfo(request):
 				'introduce':Personal_info.GetUserByName(mname).introduce,
 				'gender':Personal_info.GetUserByName(mname).gender,
 				'img':Personal_info.GetUserByName(mname).photo.url,
-				'friends':results})
+				'friends':results,
+				'message':message})
