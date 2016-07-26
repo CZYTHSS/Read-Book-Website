@@ -180,11 +180,56 @@
 				border: 1px solid #546685;
 				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
 				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
+			.SaveButton{
+				margin-top:15px;
+				font-size:20px;
+				float:left;
+				background-color: #a5b8da;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+				background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: linear-gradient(top, #a5b8da, #7089b3);
+				border-top: 1px solid #758fba;
+				border-right: 1px solid #6c84ab;
+				border-bottom: 1px solid #5c6f91;
+				border-left: 1px solid #6c84ab;
+				border-radius: 18px;
+				-webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+				box-shadow: inset 0 1px 0 0 #aec3e5;
+				color: #fff;
+				font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+				padding: 8px 0;
+				text-align: center;
+				text-shadow: 0 -1px 1px #64799e;
+				text-transform: uppercase;
+				width: 100px;
+			}
+			.SaveButton:hover {
+				background-color: #9badcc;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+				background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+				background-image: linear-gradient(top, #9badcc, #687fa6);
+				border-top: 1px solid #6d86ad;
+				border-right: 1px solid #647a9e;
+				border-bottom: 1px solid #546685;
+				border-left: 1px solid #647a9e;
+				-webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+				box-shadow: inset 0 1px 0 0 #a5b9d9;
+				cursor: pointer; }
+			.SaveButton:active {
+				border: 1px solid #546685;
+				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
 			#personal_info {
 				font-family:"华文新魏";
 				font-size:20px;
 				width:40%;
-				height:580px;
+				height:600px;
 				margin:0 auto;
 				border-style: solid;
 				border-color: gray;
@@ -237,16 +282,108 @@
 				padding-right:25%;
 				font-family:"华文新魏";
 			}
+			.sendlabel{
+				width:50%;
+				height:40px;
+				padding-left:25%;
+				padding-right:25%;
+				margin-bottom:300px;
+				font-family:"华文新魏";
+			}
 			#search_friends{
 				width:75%;
 				height:40px;
 				font-family:"华文新魏";
 				float:left;
+				border:3px solid gray;
 			}
 			#temp{float:left;font-family:"华文新魏";font-size:25px;line-height:50px;}
 			#headportrait{float:left}
 			#headportrait img{margin-top:10px;height: 80px;width: 80px;border:1px solid black;margin-left:30px;float:left}
 			.friendinfo{font-family: "微软雅黑"; font-size: 20px; float:left;overflow: hidden;text-overflow: ellipsis;margin-left:3%;margin-top:30px;font-weight:bold}
+			#history{
+				width:50%;
+				padding-left:25%;
+				padding-right:25%;
+				font-family:"华文新魏";
+			}
+			#singlemessage{
+				margin-top:10px;
+				border: 3px solid gray;
+				width:100%;
+				height:100px;
+				border-radius:10px;
+			}
+			.portraitbox{position: relative;height: 50px;background-size: cover;margin: 0 10px;width: 50px;}
+			.portrait{margin-top:10px;height: 50px;width: 50px;border:1px solid black;margin-left:5px;}
+			.nickname{font-family: "微软雅黑"; font-size: 15px; width: 100%;text-align: center;overflow: hidden;margin-top:20px;text-overflow: ellipsis;}
+			.content{font-family: "华文新魏"; overflow: hidden; font-size: 20px; height: 50px;margin-top:10px;text-overflow: ellipsis;}
+			.border{width: 80px;float:left;}
+			.time{
+				float:right;
+				margin-top:10px;
+				margin-right:10px;
+				font-size:20px;
+			}
+			#message-area{
+				border:3px solid gray;
+				font-size:20px;
+				float:left;
+				border-radius:10px;
+			}
+			#history_section{
+				font-size:30px;
+				text-align:center;
+			}
+			#send_section{
+				font-size:30px;
+				text-align:center;
+			}
+			.addmessage{
+				font-size:20px;
+				margin-top:45px;
+				float:right;
+				background-color: #a5b8da;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5b8da), color-stop(100%, #7089b3));
+				background-image: -webkit-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -moz-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -ms-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: -o-linear-gradient(top, #a5b8da, #7089b3);
+				background-image: linear-gradient(top, #a5b8da, #7089b3);
+				border-top: 1px solid #758fba;
+				border-right: 1px solid #6c84ab;
+				border-bottom: 1px solid #5c6f91;
+				border-left: 1px solid #6c84ab;
+				border-radius: 18px;
+				-webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+				box-shadow: inset 0 1px 0 0 #aec3e5;
+				color: #fff;
+				font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+				padding: 8px 0;
+				text-align: center;
+				text-shadow: 0 -1px 1px #64799e;
+				text-transform: uppercase;
+				width: 100px;
+			}
+			.addmessage:hover {
+				background-color: #9badcc;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+				background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+				background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+				background-image: linear-gradient(top, #9badcc, #687fa6);
+				border-top: 1px solid #6d86ad;
+				border-right: 1px solid #647a9e;
+				border-bottom: 1px solid #546685;
+				border-left: 1px solid #647a9e;
+				-webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+				box-shadow: inset 0 1px 0 0 #a5b9d9;
+				cursor: pointer; }
+			.addmessage:active {
+				border: 1px solid #546685;
+				-webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+				box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee; }
 		</style>
 	</head>
 
@@ -325,7 +462,7 @@
 					地区: <input class = "input" type="text" name="region" maxlength="50" value = "{{region}}"><br><br>
 					个人介绍:<br/><br/><textarea id = "introduce" name="introduce" cols="20" rows="5">{{introduce}}</textarea>
 				</div>
-				<input type = "submit" class="ClickButton" style="float:left;position:relative;left:47%;" value = "保存修改">
+				<input type = "submit" class="SaveButton" style="float:left;position:relative;left:47%;" value = "保存修改">
 			</div>
 			<br/>
 			<br/><br/>
@@ -366,17 +503,35 @@
 		<div id = "message" style = "display:none">
 		<form method = "POST">
 			{% csrf_token %}
-		<div class = "searchlabel">
-			<div id = "temp">发送至：</div>
-			<input id = "search_friends" type = "text" name = "friend">
-			<input id = "search_friends" type = "text" name = "context">
-			<input class = "addfriend" type = "submit" name = "add" value = "发送">
-		</div>
-		<input type = "text" name = 'username' value = '{{username}}' style = "display:none">
+			<div id = "history">
+				<div id = "history_section">消息记录</div>
+				<hr />
+				{% for i in message %}
+				<div id = "singlemessage">
+					<div class = "border">
+						{% if i.photo1 == "" %}
+							<div class="portraitbox"><img class="portrait" src="http://127.0.0.1:8000/media/upload/desert.jpg"/></div>
+						{% else %}
+							<div class="portraitbox"><img class="portrait" src="{{i.photo1.url}}"/></div>
+						{% endif %}
+						<div class="nickname">{{i.nickname1}}</div>
+					</div>
+					<div class="content">{{i.message}}</div>
+					<div class = "time">在{{i.date}}时发送给-{{i.nickname2}}</div>
+				</div>
+				{% endfor %}
+			</div>
+			<br/><br/>
+			<div class = "sendlabel">
+				<div id = "send_section">发送消息</div>
+				<hr />
+				<div id = "temp">发送至：</div>
+				<input id = "search_friends" type = "text" name = "friend"><br/><br/><br/><br/>
+				<textarea id = "message-area" name="comment" cols="80%" rows="5"></textarea>
+				<input class = "addmessage" type = "submit" name = "add" value = "发送">
+			</div>
+			<input type = "text" name = 'username' value = '{{username}}' style = "display:none">
 		</form>
-			{% for i in message %}
-				<div>{{i.message}}</div>
-			{% endfor %}
 		</div>		
 	</body>
 </html>
