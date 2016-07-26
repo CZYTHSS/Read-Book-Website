@@ -247,6 +247,17 @@ class User_Book_Info(models.Model):
 	bookname = models.CharField(max_length = 100)
 	status = models.IntegerField()
 	point = models.IntegerField()
+	def AddBook(musername,mbookname,mstatus):
+		if mstatus == "已读":
+			a = User_Book_Info(username = musername,bookname = mbookname,status = 0,point = 0)
+		elif mstatus == "正在读":
+			a = User_Book_Info(username = musername,bookname = mbookname,status = 1,point = 0)
+		elif mstatus == "想读":
+			a = User_Book_Info(username = musername,bookname = mbookname,status = 2,point = 0)
+		a.save()
+	def FindBooks(musername,mstatus):
+		a = User_Book_Info.objects.filter(username = musername,status = mstatus)
+		return a
 	
 class User_Relationship(models.Model):
 	username1 = models.CharField(max_length = 100)

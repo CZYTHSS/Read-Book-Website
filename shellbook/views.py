@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 from shellbook.models import User_Relationship
 from shellbook.models import Message_Record
+from shellbook.models import User_Book_Info
 
 # Create your views here.
 def home(request):
@@ -33,10 +34,16 @@ def home(request):
 				a = Book_info.GetbooksbyClassification(request.POST['search'])
 				return render(request, 'searchresults.html', {'books': a,'flag':0})	
 		else:
-			Book_Review.StoreComment(request.GET['book'],request.GET['username'],request.POST['comment'])
-			a = Book_Review.GetCommentsBybookname(request.GET['book'])
-			a1 = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
-			return render(request,'book.html',{'bookobject':a1,'username':request.GET['username'],'comment':a})
+			if len(request.POST) == 2:
+				User_Book_Info.AddBook(request.GET['username'],request.GET['book'],request.POST['status'])
+				a = Book_Review.GetCommentsBybookname(request.GET['book'])
+				a1 = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
+				return render(request,'book.html',{'bookobject':a1,'username':request.GET['username'],'comment':a})
+			else:
+				Book_Review.StoreComment(request.GET['book'],request.GET['username'],request.POST['comment'])
+				a = Book_Review.GetCommentsBybookname(request.GET['book'])
+				a1 = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
+				return render(request,'book.html',{'bookobject':a1,'username':request.GET['username'],'comment':a})
 
 @csrf_protect
 def userregister(request):
@@ -49,6 +56,7 @@ def userregister(request):
 			return HttpResponseRedirect("../login/")
 	else:# 当正常访问时
 		return render(request, 'user_registration.html')
+		
 def userlogin(request):
 	print(request.POST)
 	if request.POST:   # 当提交表单时  
@@ -71,6 +79,7 @@ def userlogin(request):
 				return render(request, 'user_login.html',{'flag': 0})
 	else:# 当正常访问时
 		return render(request, 'user_login.html')
+		
 def userinfo(request):
 	if request.POST:
 		if len(request.POST) >= 6:# 当提交表单时
@@ -85,6 +94,18 @@ def userinfo(request):
 				results.append(Personal_info.objects.get(username = friend.username2))
 			message = []
 			message = Message_Record.FindMessage(d)
+			books = User_Book_Info.FindBooks(d,0)
+			results2 = []
+			for book in books:
+				results2.append(Book_info.objects.filter(bookname = book.bookname)[0])
+			books = User_Book_Info.FindBooks(d,1)
+			results3 = []
+			for book in books:
+				results3.append(Book_info.objects.filter(bookname = book.bookname)[0])
+			books = User_Book_Info.FindBooks(d,2)
+			results4 = []
+			for book in books:
+				results4.append(Book_info.objects.filter(bookname = book.bookname)[0])
 			if len(request.FILES) == 1:
 				f = request.FILES['img']
 				Personal_info.Changeuserinfo(d,a,b,c,e,f)
@@ -95,7 +116,10 @@ def userinfo(request):
 					'gender':Personal_info.GetUserByName(d).gender,
 					'img':Personal_info.GetUserByName(d).photo.url,
 					'friends':results,
-					'message':message})
+					'message':message,
+					'books_isreading':results3,
+					'books_read':results2,
+					'bookswanted':results4})
 			else:
 				f = ""
 				Personal_info.Changeuserinfo(d,a,b,c,e,f)
@@ -106,35 +130,57 @@ def userinfo(request):
 					'gender':Personal_info.GetUserByName(d).gender,
 					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
 					'friends':results,
-					'message':message})
+					'message':message,
+					'books_isreading':results3,
+					'books_read':results2,
+					'bookswanted':results4})
 		elif len(request.POST) == 4:
-			a = request.POST['friends']
-			b = request.POST['username']
-			User_Relationship.AddFriend(b,a)
-			friends = User_Relationship.FindFriends(b)
-			results = []
-			for friend in friends:
-				results.append(Personal_info.objects.get(username = friend.username2))
-			message = []
-			message = Message_Record.FindMessage(b)
-			if Personal_info.objects.get(username = b).photo == "":
-				return render(request, 'personalhome.html',{'username':b,
-					'nickname':Personal_info.GetUserByName(b).nickname,
-					'region':Personal_info.GetUserByName(b).region,
-					'introduce':Personal_info.GetUserByName(b).introduce,
-					'gender':Personal_info.GetUserByName(b).gender,
-					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
-					'friends':results,
-					'message':message})
-			else:
-				return render(request, 'personalhome.html',{'username':b,
-					'nickname':Personal_info.GetUserByName(b).nickname,
-					'region':Personal_info.GetUserByName(b).region,
-					'introduce':Personal_info.GetUserByName(b).introduce,
-					'gender':Personal_info.GetUserByName(b).gender,
-					'img':Personal_info.GetUserByName(b).photo.url,
-					'friends':results,
-					'message':message})
+			if request.POST['add'] == "添加好友":
+				a = request.POST['friends']
+				b = request.POST['username']
+				User_Relationship.AddFriend(b,a)
+				friends = User_Relationship.FindFriends(b)
+				results = []
+				for friend in friends:
+					results.append(Personal_info.objects.get(username = friend.username2))
+				message = []
+				message = Message_Record.FindMessage(b,0)
+				books = User_Book_Info.FindBooks(b)
+				results2 = []
+				for book in books:
+					results2.append(Book_info.objects.filter(bookname = book.bookname)[0])
+				books = User_Book_Info.FindBooks(b,1)
+				results3 = []
+				for book in books:
+					results3.append(Book_info.objects.filter(bookname = book.bookname)[0])
+				books = User_Book_Info.FindBooks(b,2)
+				results4 = []
+				for book in books:
+					results4.append(Book_info.objects.filter(bookname = book.bookname)[0])
+				if Personal_info.objects.get(username = b).photo == "":
+					return render(request, 'personalhome.html',{'username':b,
+						'nickname':Personal_info.GetUserByName(b).nickname,
+						'region':Personal_info.GetUserByName(b).region,
+						'introduce':Personal_info.GetUserByName(b).introduce,
+						'gender':Personal_info.GetUserByName(b).gender,
+						'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
+						'friends':results,
+						'message':message,
+						'books_isreading':results3,
+						'books_read':results2,
+						'bookswanted':results4})
+				else:
+					return render(request, 'personalhome.html',{'username':b,
+						'nickname':Personal_info.GetUserByName(b).nickname,
+						'region':Personal_info.GetUserByName(b).region,
+						'introduce':Personal_info.GetUserByName(b).introduce,
+						'gender':Personal_info.GetUserByName(b).gender,
+						'img':Personal_info.GetUserByName(b).photo.url,
+						'friends':results,
+						'message':message,
+						'books_isreading':results3,
+						'books_read':results2,
+						'bookswanted':results4})
 		elif len(request.POST) == 5:
 			a = request.POST['friend']
 			b = request.POST['username']
@@ -146,6 +192,18 @@ def userinfo(request):
 				results.append(Personal_info.objects.get(username = friend.username2))
 			message = []
 			message = Message_Record.FindMessage(b)
+			books = User_Book_Info.FindBooks(b,0)
+			results2 = []
+			for book in books:
+				results2.append(Book_info.objects.filter(bookname = book.bookname)[0])
+			books = User_Book_Info.FindBooks(b,1)
+			results3 = []
+			for book in books:
+				results3.append(Book_info.objects.filter(bookname = book.bookname)[0])
+			books = User_Book_Info.FindBooks(b,2)
+			results4 = []
+			for book in books:
+				results4.append(Book_info.objects.filter(bookname = book.bookname)[0])
 			if Personal_info.objects.get(username = b).photo == "":
 				return render(request, 'personalhome.html',{'username':b,
 					'nickname':Personal_info.GetUserByName(b).nickname,
@@ -154,7 +212,10 @@ def userinfo(request):
 					'gender':Personal_info.GetUserByName(b).gender,
 					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
 					'friends':results,
-					'message':message})
+					'message':message,
+					'books_isreading':results3,
+					'books_read':results2,
+					'bookswanted':results4})
 			else:
 				return render(request, 'personalhome.html',{'username':b,
 					'nickname':Personal_info.GetUserByName(b).nickname,
@@ -163,7 +224,10 @@ def userinfo(request):
 					'gender':Personal_info.GetUserByName(b).gender,
 					'img':Personal_info.GetUserByName(b).photo.url,
 					'friends':results,
-					'message':message})	
+					'message':message,
+					'books_isreading':results3,
+					'books_read':results2,
+					'bookswanted':results4})	
 			
 	mname = str(request.GET['username'])
 	friends = User_Relationship.FindFriends(mname)
@@ -172,6 +236,18 @@ def userinfo(request):
 		results.append(Personal_info.objects.get(username = friend.username2))
 	message = []
 	message = Message_Record.FindMessage(mname)
+	books = User_Book_Info.FindBooks(mname,0)
+	results2 = []
+	for book in books:
+		results2.append(Book_info.objects.filter(bookname = book.bookname)[0])
+	books = User_Book_Info.FindBooks(mname,1)
+	results3 = []
+	for book in books:
+		results3.append(Book_info.objects.filter(bookname = book.bookname)[0])
+	books = User_Book_Info.FindBooks(mname,2)
+	results4 = []
+	for book in books:
+		results4.append(Book_info.objects.filter(bookname = book.bookname)[0])
 	if Personal_info.GetUserByName(mname).photo == "":
 		return render(request, 'personalhome.html',{'username':mname,
 				'nickname':Personal_info.GetUserByName(mname).nickname,
@@ -180,7 +256,10 @@ def userinfo(request):
 				'gender':Personal_info.GetUserByName(mname).gender,
 				'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
 				'friends':results,
-				'message':message})
+				'message':message,
+				'books_isreading':results3,
+				'books_read':results2,
+				'bookswanted':results4})
 	else:
 		return render(request, 'personalhome.html',{'username':mname,
 				'nickname':Personal_info.GetUserByName(mname).nickname,
@@ -189,4 +268,7 @@ def userinfo(request):
 				'gender':Personal_info.GetUserByName(mname).gender,
 				'img':Personal_info.GetUserByName(mname).photo.url,
 				'friends':results,
-				'message':message})
+				'message':message,
+				'books_isreading':results3,
+				'books_read':results2,
+				'bookswanted':results4})

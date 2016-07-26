@@ -586,7 +586,6 @@
 			#notice{margin-bottom:100px;}
 		</style>
 	</head>
-
 	<body>
 		<div class="mainContent">
 			<div id="bg">  
@@ -634,6 +633,12 @@
 		</div>
 		<form method = "POST">
 			{% csrf_token %}
+			<input type = "submit" value = "已读" name = "status">
+			<input type = "submit" value = "想读" name = "status">
+			<input type = "submit" value = "正在读" name = "status">
+		</form>
+		<form method = "POST">
+			{% csrf_token %}
 			<div id = "review">
 				<div id = "review_section">用户评论</div>
 				<hr />
@@ -662,7 +667,6 @@
 				<input type = "submit" class="ClickButton" value = "发表评论">
 			</div>
 			{% endif %}
-			</form>
-		
+		</form>	
 	</body>
 </html>
