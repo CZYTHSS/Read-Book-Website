@@ -73,7 +73,7 @@ def userlogin(request):
 		return render(request, 'user_login.html')
 def userinfo(request):
 	if request.POST:
-		if len(request.POST) == 6:# 当提交表单时
+		if len(request.POST) >= 6:# 当提交表单时
 			a = request.POST['nickname']
 			b = request.POST['region']
 			c = request.POST['introduce']
