@@ -21,6 +21,7 @@ def home(request):
 			a1 = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
 			return render(request,'book.html',{'bookobject':a1,'username':request.GET['username'],'comment':a})
 	else:
+		print(len(request.POST))
 		if len(request.POST) == 0:
 			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
 		elif len(request.GET) == 0:
