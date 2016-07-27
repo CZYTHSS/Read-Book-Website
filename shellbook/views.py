@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from shellbook.models import User_Relationship
 from shellbook.models import Message_Record
 from shellbook.models import User_Book_Info
+from shellbook.models import Notebook
 
 # Create your views here.
 def home(request):
@@ -21,6 +22,7 @@ def home(request):
 			a1 = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
 			return render(request,'book.html',{'bookobject':a1,'username':request.GET['username'],'comment':a})
 	else:
+		print(len(request.POST))
 		if len(request.POST) == 0:
 			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
 		elif len(request.GET) == 0:
@@ -272,3 +274,70 @@ def userinfo(request):
 				'books_isreading':results3,
 				'books_read':results2,
 				'bookswanted':results4})
+				
+def notebook(request):
+	if request.POST:
+		print(request.POST)
+		if request.POST['score'] == "提交":
+			musername = request.GET['username']
+			mbookname = request.GET['book']
+			mnotebook = request.POST['notebook']
+			Notebook.StoreNotebook(musername,mbookname,mnotebook)
+			notebooks = Notebook.objects.filter(username = musername)
+			return render(request, 'notebook.html',{'notebooks':notebooks})
+		else:
+			musername = request.GET['username']
+			mbookname = request.GET['book']
+			temp = User_Book_Info.objects.get(username = musername,bookname = mbookname)
+			notebooks = Notebook.objects.filter(username = musername)
+			if temp.point == 0:
+				temp.point = int(request.POST['score'][0])
+				books = Book_info.objects.filter(bookname = mbookname)
+				for book in books:
+					if temp.point == 1:
+						book.onepoint = book.onepoint + 1
+					elif temp.point == 2:
+						book.twopoint = book.twopoint + 1
+					elif temp.point == 3:
+						book.threepoint = book.threepoint + 1
+					elif temp.point == 4:
+						book.fourpoint = book.fourpoint + 1
+					elif temp.point == 5:
+						book.fivepoint = book.fivepoint + 1
+					book.usernumber = book.usernumber + 1
+					book.point = (book.onepoint + book.twopoint * 2 + book.threepoint * 3 + book.fourpoint * 4 + book.fivepoint * 5) / book.usernumber
+					book.save()
+				temp.save()
+			else:
+				books = Book_info.objects.filter(bookname = mbookname)
+				for book in books:
+					if temp.point == 1:
+						book.onepoint = book.onepoint - 1
+					elif temp.point == 2:
+						book.twopoint = book.twopoint - 1
+					elif temp.point == 3:
+						book.threepoint = book.threepoint - 1
+					elif temp.point == 4:
+						book.fourpoint = book.fourpoint - 1
+					elif temp.point == 5:
+						book.fivepoint = book.fivepoint - 1
+				temp.point = int(request.POST['score'][0])
+				books = Book_info.objects.filter(bookname = mbookname)
+				for book in books:
+					if temp.point == 1:
+						book.onepoint = book.onepoint + 1
+					elif temp.point == 2:
+						book.twopoint = book.twopoint + 1
+					elif temp.point == 3:
+						book.threepoint = book.threepoint + 1
+					elif temp.point == 4:
+						book.fourpoint = book.fourpoint + 1
+					elif temp.point == 5:
+						book.fivepoint = book.fivepoint + 1
+					book.point = (book.onepoint + book.twopoint * 2 + book.threepoint * 3 + book.fourpoint * 4 + book.fivepoint * 5) / book.usernumber
+					book.save()
+				temp.save()
+			return render(request, 'notebook.html',{'notebooks':notebooks})
+	musername = request.GET['username']
+	notebooks = Notebook.objects.filter(username = musername)
+	return render(request, 'notebook.html',{'notebooks':notebooks})

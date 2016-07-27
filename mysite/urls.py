@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
 	url(r'^$', shellbook_views.home, name='home'),
 	url(r'^admin/', admin.site.urls),
+	url(r'^personal/', shellbook_views.notebook, name='notebook'),
 	url(r'^login/personal_info/', shellbook_views.userinfo,name = 'userinfo'),
 	url(r'^register/', shellbook_views.userregister,name = 'register'),
 	url(r'^login/', shellbook_views.userlogin,name = 'login'),

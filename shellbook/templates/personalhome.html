@@ -46,18 +46,6 @@
 				margin-top:8px;
 				float:left;
 			}
-			#login{
-				margin-left:60%;
-				margin-top:50px;
-				font-size:20px;
-				float:left;
-			}
-			#register{
-				margin-left:5px;
-				margin-top:50px;
-				font-size:20px;
-				float:left;
-			}
 			#headline{
 				width:70%;
 				height:100%;
@@ -67,28 +55,6 @@
 			#headline img{
 				margin-left:11%;
 				margin-top:5%;
-			}
-			.NewBooks{
-				width:60%;
-				height:850px;
-			}
-			#section1{
-				width:100%;
-			}
-			.NewBook{
-				width:20%;
-				height:46%;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				float:left;
-			}
-			.NewBook img{
-				width:98%;
-				height:75%;
-			}
-			.LoginBar{
-				text-align:center
 			}
 			.ClickButton{
 				margin-left:1%;
@@ -598,8 +564,8 @@
 			<div class = "bookarea">
 			{% for i in books_isreading %}
 				<div class = "new-book">
-					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><img src = "{{i.bookcover}}"/></a><br/>
-					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><font size="5">{{ i.bookname }}</font></a></b><br/><br/>
+					<a href = "http://127.0.0.1:8000/personal/?book={{i.bookname}}&class={{i.classification}}&username={{username}}"><img src = "{{i.bookcover}}"/></a><br/>
+					<b><a href = "http://127.0.0.1:8000/personal/?book={{i.bookname}}&class={{i.classification}}&username={{username}}"><font size="5">{{ i.bookname }}</font></a></b><br/><br/>
 					<font size="3">{{ i.bookwriter }}<font>
 					<p>{{i.bookyear}}</p>
 				</div>
@@ -609,8 +575,8 @@
 			<div class = "bookarea">
 			{% for i in books_read %}
 				<div class = "new-book">
-					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><img src = "{{i.bookcover}}"/></a><br/>
-					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><font size="5">{{ i.bookname }}</font></a></b><br/><br/>
+					<a href = "http://127.0.0.1:8000/personal/?book={{i.bookname}}&class={{i.classification}}&username={{username}}"><img src = "{{i.bookcover}}"/></a><br/>
+					<b><a href = "http://127.0.0.1:8000/personal/?book={{i.bookname}}&class={{i.classification}}&username={{username}}"><font size="5">{{ i.bookname }}</font></a></b><br/><br/>
 					<font size="3">{{ i.bookwriter }}<font>
 					<p>{{i.bookyear}}</p>
 				</div>
@@ -620,8 +586,8 @@
 			<div class = "bookarea">
 			{% for i in bookswanted %}
 				<div class = "new-book">
-					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><img src = "{{i.bookcover}}"/></a><br/>
-					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><font size="5">{{ i.bookname }}</font></a></b><br/><br/>
+					<a href = "http://127.0.0.1:8000/personal/?book={{i.bookname}}&class={{i.classification}}&username={{username}}"><img src = "{{i.bookcover}}"/></a><br/>
+					<b><a href = "http://127.0.0.1:8000/personal/?book={{i.bookname}}&class={{i.classification}}&username={{username}}"><font size="5">{{ i.bookname }}</font></a></b><br/><br/>
 					<font size="3">{{ i.bookwriter }}<font>
 					<p>{{i.bookyear}}</p>
 				</div>
