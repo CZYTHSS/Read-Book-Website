@@ -155,10 +155,15 @@
 				margin:0 auto;
 				text-align:center;
 			}
-			#review{width:100%;height:40px;}
+			#review{width:100%;height:40px;margin-bottom:50px;}
 			#note_section{float:left;font-size:20px;font-weight:bold;margin-left:20%;}
 			#writenote_section{font-size:30px;font-weight:bold;text-align:center;}
 			#introduce{float:left;margin-left:20%;overflow:auto}
+			#notebook{
+				border:3px solid gray;
+				padding-top:10px;
+				padding-bottom:10px;
+			}
 		</style>
 	</head>
 
@@ -181,9 +186,10 @@
 		<form method="POST">
 			{% csrf_token %}
 			<div id = "user_info">
-				<h2><font color="gray">我的读书笔记<font></h2>
+				<h2><font color="black">我的读书笔记<font></h2>
+				<hr/>
 				{% for notebook in notebooks %}
-					<div>{{notebook.notebook}}</div>
+					<div id = "notebook">{{notebook.notebook}}</div><br/>
 				{% endfor %}
 				<div id = "review">
 					<div id = "note_section">评价本书</div>
@@ -195,7 +201,7 @@
 				</div>
 				<div id = "writenote_section">撰写读书笔记<hr/></div>
 				<textarea id = "introduce" name="notebook" cols="80%" rows="10"></textarea>
-				<input type = "submit" name="score" value = "提交"><br/><br/>
+				<input class= "button" type = "submit" name="score" value = "提交"><br/><br/>
 				<br/>
 			</div>
 		<form>
