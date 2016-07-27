@@ -60,8 +60,19 @@ def userregister(request):
 		return render(request, 'user_registration.html')
 		
 def userlogin(request):
-	if request.POST:   # 当提交表单时  
+	print(1)
+	if request.POST:   # 当提交表单时
 		if len(request.POST) == 5:
+			if request.POST['select'] == "书名":
+				a = Book_info.GetbooksbyBookname(request.POST['search'])
+				return render(request, 'searchresults.html', {'books': a,'flag':1,'username':request.POST['username']}) 
+			elif request.POST['select'] == "作者":
+				a = Book_info.GetbooksbyWriter(request.POST['search'])
+				return render(request, 'searchresults.html', {'books': a,'flag':1,'username':request.POST['username']})
+			elif request.POST['select'] == "类别":
+				a = Book_info.GetbooksbyClassification(request.POST['search'])
+				return render(request, 'searchresults.html', {'books': a,'flag':1,'username':request.POST['username']})
+		elif len(request.POST) == 4:
 			if request.POST['select'] == "书名":
 				a = Book_info.GetbooksbyBookname(request.POST['search'])
 				return render(request, 'searchresults.html', {'books': a,'flag':1,'username':request.POST['username']}) 
@@ -78,6 +89,8 @@ def userlogin(request):
 				return render(request, 'home.html', {'flag': 1, 'username': a, 'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
 			else:
 				return render(request, 'user_login.html',{'flag': 0})
+		else:
+			return HttpResponse("hello")
 	else:# 当正常访问时
 		return render(request, 'user_login.html')
 		
