@@ -273,3 +273,6 @@ def userinfo(request):
 				'books_isreading':results3,
 				'books_read':results2,
 				'bookswanted':results4})
+				
+def notebook(request):
+	return render(request, 'notebook.html')

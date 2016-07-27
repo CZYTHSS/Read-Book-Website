@@ -397,6 +397,11 @@ class Personal_info(models.Model):
 	def GetUsersByName(nick):
 		return Personal_info.objects.filter(username = nick)
 		
+class notebook(models.Model):
+	username = models.CharField(max_length = 100)
+	bookname = models.CharField(max_length = 100)
+	notebook = models.CharField(max_length = 500)
+		
 		
 	
 		
