@@ -11,7 +11,7 @@ from operator import itemgetter, attrgetter
 class Book_info(models.Model):
 	bookname = models.CharField(max_length = 100)
 	bookwriter = models.CharField(max_length = 100)
-	bookyear = models.DateField(default = date.today)
+	bookyear = models.CharField(max_length = 100)
 	bookpress = models.CharField(max_length = 100)
 	classification = models.CharField(max_length = 100)
 	bookcover = models.CharField(max_length = 150)
@@ -21,9 +21,15 @@ class Book_info(models.Model):
 	threepoint = models.IntegerField()
 	fourpoint = models.IntegerField()
 	fivepoint = models.IntegerField()
-	point = models.IntegerField()
+	point = models.FloatField()
+	booknumber = models.CharField(max_length = 100)
+	writerintroduce = models.CharField(max_length = 1000)
+	bookintroduce = models.CharField(max_length = 2000)
+	bookprice = models.CharField(max_length = 100)
+	bookbinding = models.CharField(max_length = 100)
+	booktranslater = models.CharField(max_length = 100)
 	def importdata():
-		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\经管.xlsx')
+		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\data.xlsx')
 		try:
 			mysheet = workbook.sheets()[0]
 		except:
@@ -31,13 +37,13 @@ class Book_info(models.Model):
 			return
 		#total rows and cols
 		print("%d rows, %d cols"%(mysheet.nrows, mysheet.ncols))
-		for row in range(1,mysheet.nrows):
-			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 1]
-			mwriter = str(mysheet.cell(row,2))[6:len(str(mysheet.cell(row,2))) - 1]
-			myear = xlrd.xldate.xldate_as_datetime(mysheet.cell(row,4).value, 0)
-			mpress = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 1]
-			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 1]
-			mclassification = "经管" + str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 1]
+		for row in range(0,mysheet.nrows):
+			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 3]
+			mwriter = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 3]
+			myear = str(mysheet.cell(row,6))[6:len(str(mysheet.cell(row,6))) - 3]
+			mpress = str(mysheet.cell(row,4))[6:len(str(mysheet.cell(row,4))) - 3]
+			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 3]
+			mclassification = str(mysheet.cell(row,11))[6:len(str(mysheet.cell(row,11))) - 3]
 			musernumber = 0
 			monepoint = 0
 			mtwopoint = 0
@@ -45,9 +51,16 @@ class Book_info(models.Model):
 			mfourpoint = 0
 			mfivepoint = 0
 			mpoint = 0
-			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint)
+			mbooknumber = str(mysheet.cell(row,10))[6:len(str(mysheet.cell(row,10))) - 3]
+			mwriterintroduce = str(mysheet.cell(row,12))[8:len(str(mysheet.cell(row,12))) - 1]
+			mbookintroduce = str(mysheet.cell(row,13))[8:len(str(mysheet.cell(row,13))) - 1]
+			mbookprice = str(mysheet.cell(row,8))[6:len(str(mysheet.cell(row,8))) - 3]
+			mbookbinding = str(mysheet.cell(row,9))[6:len(str(mysheet.cell(row,9))) - 3]
+			mbooktranslater = str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 3]
+			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint,
+			booknumber = mbooknumber,writerintroduce = mwriterintroduce,bookintroduce = mbookintroduce,bookprice = mbookprice,bookbinding = mbookbinding,booktranslater = mbooktranslater)
 			a.save()
-		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\科技.xlsx')
+		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\编程.xlsx')
 		try:
 			mysheet = workbook.sheets()[0]
 		except:
@@ -55,13 +68,13 @@ class Book_info(models.Model):
 			return
 		#total rows and cols
 		print("%d rows, %d cols"%(mysheet.nrows, mysheet.ncols))
-		for row in range(1,mysheet.nrows):
-			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 1]
-			mwriter = str(mysheet.cell(row,2))[6:len(str(mysheet.cell(row,2))) - 1]
-			myear = xlrd.xldate.xldate_as_datetime(mysheet.cell(row,4).value, 0)
-			mpress = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 1]
-			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 1]
-			mclassification = "科技" + str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 1]
+		for row in range(0,mysheet.nrows):
+			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 3]
+			mwriter = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 3]
+			myear = str(mysheet.cell(row,6))[6:len(str(mysheet.cell(row,6))) - 3]
+			mpress = str(mysheet.cell(row,4))[6:len(str(mysheet.cell(row,4))) - 3]
+			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 3]
+			mclassification = str(mysheet.cell(row,11))[6:len(str(mysheet.cell(row,11))) - 3]
 			musernumber = 0
 			monepoint = 0
 			mtwopoint = 0
@@ -69,9 +82,16 @@ class Book_info(models.Model):
 			mfourpoint = 0
 			mfivepoint = 0
 			mpoint = 0
-			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint)
+			mbooknumber = str(mysheet.cell(row,10))[6:len(str(mysheet.cell(row,10))) - 3]
+			mwriterintroduce = str(mysheet.cell(row,12))[8:len(str(mysheet.cell(row,12))) - 1]
+			mbookintroduce = str(mysheet.cell(row,13))[8:len(str(mysheet.cell(row,13))) - 1]
+			mbookprice = str(mysheet.cell(row,8))[6:len(str(mysheet.cell(row,8))) - 3]
+			mbookbinding = str(mysheet.cell(row,9))[6:len(str(mysheet.cell(row,9))) - 3]
+			mbooktranslater = str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 3]
+			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint,
+			booknumber = mbooknumber,writerintroduce = mwriterintroduce,bookintroduce = mbookintroduce,bookprice = mbookprice,bookbinding = mbookbinding,booktranslater = mbooktranslater)
 			a.save()
-		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\流行.xlsx')
+		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\绘本.xlsx')
 		try:
 			mysheet = workbook.sheets()[0]
 		except:
@@ -79,13 +99,13 @@ class Book_info(models.Model):
 			return
 		#total rows and cols
 		print("%d rows, %d cols"%(mysheet.nrows, mysheet.ncols))
-		for row in range(1,mysheet.nrows):
-			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 1]
-			mwriter = str(mysheet.cell(row,2))[6:len(str(mysheet.cell(row,2))) - 1]
-			myear = xlrd.xldate.xldate_as_datetime(mysheet.cell(row,4).value, 0)
-			mpress = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 1]
-			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 1]
-			mclassification = "流行" + str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 1]
+		for row in range(0,mysheet.nrows):
+			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 3]
+			mwriter = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 3]
+			myear = str(mysheet.cell(row,6))[6:len(str(mysheet.cell(row,6))) - 3]
+			mpress = str(mysheet.cell(row,4))[6:len(str(mysheet.cell(row,4))) - 3]
+			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 3]
+			mclassification = str(mysheet.cell(row,11))[6:len(str(mysheet.cell(row,11))) - 3]
 			musernumber = 0
 			monepoint = 0
 			mtwopoint = 0
@@ -93,9 +113,16 @@ class Book_info(models.Model):
 			mfourpoint = 0
 			mfivepoint = 0
 			mpoint = 0
-			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint)
+			mbooknumber = str(mysheet.cell(row,10))[6:len(str(mysheet.cell(row,10))) - 3]
+			mwriterintroduce = str(mysheet.cell(row,12))[8:len(str(mysheet.cell(row,12))) - 1]
+			mbookintroduce = str(mysheet.cell(row,13))[8:len(str(mysheet.cell(row,13))) - 1]
+			mbookprice = str(mysheet.cell(row,8))[6:len(str(mysheet.cell(row,8))) - 3]
+			mbookbinding = str(mysheet.cell(row,9))[6:len(str(mysheet.cell(row,9))) - 3]
+			mbooktranslater = str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 3]
+			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint,
+			booknumber = mbooknumber,writerintroduce = mwriterintroduce,bookintroduce = mbookintroduce,bookprice = mbookprice,bookbinding = mbookbinding,booktranslater = mbooktranslater)
 			a.save()
-		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\文学.xlsx')
+		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\历史.xlsx')
 		try:
 			mysheet = workbook.sheets()[0]
 		except:
@@ -103,13 +130,13 @@ class Book_info(models.Model):
 			return
 		#total rows and cols
 		print("%d rows, %d cols"%(mysheet.nrows, mysheet.ncols))
-		for row in range(1,mysheet.nrows):
-			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 1]
-			mwriter = str(mysheet.cell(row,2))[6:len(str(mysheet.cell(row,2))) - 1]
-			myear = xlrd.xldate.xldate_as_datetime(mysheet.cell(row,4).value, 0)
-			mpress = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 1]
-			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 1]
-			mclassification = "文学" + str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 1]
+		for row in range(0,mysheet.nrows):
+			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 3]
+			mwriter = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 3]
+			myear = str(mysheet.cell(row,6))[6:len(str(mysheet.cell(row,6))) - 3]
+			mpress = str(mysheet.cell(row,4))[6:len(str(mysheet.cell(row,4))) - 3]
+			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 3]
+			mclassification = str(mysheet.cell(row,11))[6:len(str(mysheet.cell(row,11))) - 3]
 			musernumber = 0
 			monepoint = 0
 			mtwopoint = 0
@@ -117,9 +144,16 @@ class Book_info(models.Model):
 			mfourpoint = 0
 			mfivepoint = 0
 			mpoint = 0
-			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint)
+			mbooknumber = str(mysheet.cell(row,10))[6:len(str(mysheet.cell(row,10))) - 3]
+			mwriterintroduce = str(mysheet.cell(row,12))[8:len(str(mysheet.cell(row,12))) - 1]
+			mbookintroduce = str(mysheet.cell(row,13))[8:len(str(mysheet.cell(row,13))) - 1]
+			mbookprice = str(mysheet.cell(row,8))[6:len(str(mysheet.cell(row,8))) - 3]
+			mbookbinding = str(mysheet.cell(row,9))[6:len(str(mysheet.cell(row,9))) - 3]
+			mbooktranslater = str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 3]
+			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint,
+			booknumber = mbooknumber,writerintroduce = mwriterintroduce,bookintroduce = mbookintroduce,bookprice = mbookprice,bookbinding = mbookbinding,booktranslater = mbooktranslater)
 			a.save()
-		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\生活.xlsx')
+		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\漫画.xlsx')
 		try:
 			mysheet = workbook.sheets()[0]
 		except:
@@ -127,13 +161,13 @@ class Book_info(models.Model):
 			return
 		#total rows and cols
 		print("%d rows, %d cols"%(mysheet.nrows, mysheet.ncols))
-		for row in range(1,mysheet.nrows):
-			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 1]
-			mwriter = str(mysheet.cell(row,2))[6:len(str(mysheet.cell(row,2))) - 1]
-			myear = xlrd.xldate.xldate_as_datetime(mysheet.cell(row,4).value, 0)
-			mpress = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 1]
-			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 1]
-			mclassification = "生活" + str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 1]
+		for row in range(0,mysheet.nrows):
+			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 3]
+			mwriter = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 3]
+			myear = str(mysheet.cell(row,6))[6:len(str(mysheet.cell(row,6))) - 3]
+			mpress = str(mysheet.cell(row,4))[6:len(str(mysheet.cell(row,4))) - 3]
+			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 3]
+			mclassification = str(mysheet.cell(row,11))[6:len(str(mysheet.cell(row,11))) - 3]
 			musernumber = 0
 			monepoint = 0
 			mtwopoint = 0
@@ -141,9 +175,16 @@ class Book_info(models.Model):
 			mfourpoint = 0
 			mfivepoint = 0
 			mpoint = 0
-			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint)
+			mbooknumber = str(mysheet.cell(row,10))[6:len(str(mysheet.cell(row,10))) - 3]
+			mwriterintroduce = str(mysheet.cell(row,12))[8:len(str(mysheet.cell(row,12))) - 1]
+			mbookintroduce = str(mysheet.cell(row,13))[8:len(str(mysheet.cell(row,13))) - 1]
+			mbookprice = str(mysheet.cell(row,8))[6:len(str(mysheet.cell(row,8))) - 3]
+			mbookbinding = str(mysheet.cell(row,9))[6:len(str(mysheet.cell(row,9))) - 3]
+			mbooktranslater = str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 3]
+			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint,
+			booknumber = mbooknumber,writerintroduce = mwriterintroduce,bookintroduce = mbookintroduce,bookprice = mbookprice,bookbinding = mbookbinding,booktranslater = mbooktranslater)
 			a.save()
-		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\文化.xlsx')
+		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\小说.xlsx')
 		try:
 			mysheet = workbook.sheets()[0]
 		except:
@@ -151,13 +192,13 @@ class Book_info(models.Model):
 			return
 		#total rows and cols
 		print("%d rows, %d cols"%(mysheet.nrows, mysheet.ncols))
-		for row in range(1,mysheet.nrows):
-			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 1]
-			mwriter = str(mysheet.cell(row,2))[6:len(str(mysheet.cell(row,2))) - 1]
-			myear = xlrd.xldate.xldate_as_datetime(mysheet.cell(row,4).value, 0)
-			mpress = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 1]
-			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 1]
-			mclassification = "文化" + str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 1]
+		for row in range(0,mysheet.nrows):
+			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 3]
+			mwriter = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 3]
+			myear = str(mysheet.cell(row,6))[6:len(str(mysheet.cell(row,6))) - 3]
+			mpress = str(mysheet.cell(row,4))[6:len(str(mysheet.cell(row,4))) - 3]
+			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 3]
+			mclassification = str(mysheet.cell(row,11))[6:len(str(mysheet.cell(row,11))) - 3]
 			musernumber = 0
 			monepoint = 0
 			mtwopoint = 0
@@ -165,7 +206,76 @@ class Book_info(models.Model):
 			mfourpoint = 0
 			mfivepoint = 0
 			mpoint = 0
-			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint)
+			mbooknumber = str(mysheet.cell(row,10))[6:len(str(mysheet.cell(row,10))) - 3]
+			mwriterintroduce = str(mysheet.cell(row,12))[8:len(str(mysheet.cell(row,12))) - 1]
+			mbookintroduce = str(mysheet.cell(row,13))[8:len(str(mysheet.cell(row,13))) - 1]
+			mbookprice = str(mysheet.cell(row,8))[6:len(str(mysheet.cell(row,8))) - 3]
+			mbookbinding = str(mysheet.cell(row,9))[6:len(str(mysheet.cell(row,9))) - 3]
+			mbooktranslater = str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 3]
+			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint,
+			booknumber = mbooknumber,writerintroduce = mwriterintroduce,bookintroduce = mbookintroduce,bookprice = mbookprice,bookbinding = mbookbinding,booktranslater = mbooktranslater)
+			a.save()
+		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\推理.xlsx')
+		try:
+			mysheet = workbook.sheets()[0]
+		except:
+			print("no sheet in sheets named PC")
+			return
+		#total rows and cols
+		print("%d rows, %d cols"%(mysheet.nrows, mysheet.ncols))
+		for row in range(0,mysheet.nrows):
+			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 3]
+			mwriter = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 3]
+			myear = str(mysheet.cell(row,6))[6:len(str(mysheet.cell(row,6))) - 3]
+			mpress = str(mysheet.cell(row,4))[6:len(str(mysheet.cell(row,4))) - 3]
+			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 3]
+			mclassification = str(mysheet.cell(row,11))[6:len(str(mysheet.cell(row,11))) - 3]
+			musernumber = 0
+			monepoint = 0
+			mtwopoint = 0
+			mthreepoint = 0
+			mfourpoint = 0
+			mfivepoint = 0
+			mpoint = 0
+			mbooknumber = str(mysheet.cell(row,10))[6:len(str(mysheet.cell(row,10))) - 3]
+			mwriterintroduce = str(mysheet.cell(row,12))[8:len(str(mysheet.cell(row,12))) - 1]
+			mbookintroduce = str(mysheet.cell(row,13))[8:len(str(mysheet.cell(row,13))) - 1]
+			mbookprice = str(mysheet.cell(row,8))[6:len(str(mysheet.cell(row,8))) - 3]
+			mbookbinding = str(mysheet.cell(row,9))[6:len(str(mysheet.cell(row,9))) - 3]
+			mbooktranslater = str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 3]
+			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint,
+			booknumber = mbooknumber,writerintroduce = mwriterintroduce,bookintroduce = mbookintroduce,bookprice = mbookprice,bookbinding = mbookbinding,booktranslater = mbooktranslater)
+			a.save()
+		workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\随笔.xlsx')
+		try:
+			mysheet = workbook.sheets()[0]
+		except:
+			print("no sheet in sheets named PC")
+			return
+		#total rows and cols
+		print("%d rows, %d cols"%(mysheet.nrows, mysheet.ncols))
+		for row in range(0,mysheet.nrows):
+			mname = str(mysheet.cell(row,0))[6:len(str(mysheet.cell(row,0))) - 3]
+			mwriter = str(mysheet.cell(row,3))[6:len(str(mysheet.cell(row,3))) - 3]
+			myear = str(mysheet.cell(row,6))[6:len(str(mysheet.cell(row,6))) - 3]
+			mpress = str(mysheet.cell(row,4))[6:len(str(mysheet.cell(row,4))) - 3]
+			mcover = str(mysheet.cell(row,1))[6:len(str(mysheet.cell(row,1))) - 3]
+			mclassification = str(mysheet.cell(row,11))[6:len(str(mysheet.cell(row,11))) - 3]
+			musernumber = 0
+			monepoint = 0
+			mtwopoint = 0
+			mthreepoint = 0
+			mfourpoint = 0
+			mfivepoint = 0
+			mpoint = 0
+			mbooknumber = str(mysheet.cell(row,10))[6:len(str(mysheet.cell(row,10))) - 3]
+			mwriterintroduce = str(mysheet.cell(row,12))[8:len(str(mysheet.cell(row,12))) - 1]
+			mbookintroduce = str(mysheet.cell(row,13))[8:len(str(mysheet.cell(row,13))) - 1]
+			mbookprice = str(mysheet.cell(row,8))[6:len(str(mysheet.cell(row,8))) - 3]
+			mbookbinding = str(mysheet.cell(row,9))[6:len(str(mysheet.cell(row,9))) - 3]
+			mbooktranslater = str(mysheet.cell(row,5))[6:len(str(mysheet.cell(row,5))) - 3]
+			a = Book_info(bookname = mname,bookwriter = mwriter,bookyear = myear,bookpress = mpress,classification = mclassification,bookcover = mcover,usernumber = musernumber,onepoint = monepoint,twopoint = mtwopoint,threepoint = mthreepoint,fourpoint = mfourpoint,fivepoint = mfivepoint,point = mpoint,
+			booknumber = mbooknumber,writerintroduce = mwriterintroduce,bookintroduce = mbookintroduce,bookprice = mbookprice,bookbinding = mbookbinding,booktranslater = mbooktranslater)
 			a.save()
 	def GetbooksbyClassification(class_name):
 		results = []
