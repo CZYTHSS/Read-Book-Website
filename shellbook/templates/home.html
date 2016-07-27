@@ -425,8 +425,8 @@
 				<div class = "NewBook" >
 					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><img src = "{{book.bookcover}}"/></a><br/>
 					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><font size="5">{{ book.bookname }}</font></a></b><br/><br/>
-					<font size="3">{{ book.bookwriter }}<font>
-					<p>{{book.bookyear}}</p>
+					<font size="3" style = "font-family:'微软雅黑'">作者：{{ book.bookwriter }}</font>
+					<p><font style = "font-family:'微软雅黑'">出版日期：{{book.bookyear}}</font></p>
 				</div>
 			{% endfor %}
 			
@@ -438,8 +438,8 @@
 				<div class = "HotBook" align="center">
 					<a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><img src = "{{book.bookcover}}"/></a><br/>
 					<b><a href = "http://127.0.0.1:8000/?book={{book.bookname}}&class={{book.classification}}&username={{username}}"><font size="5">{{ book.bookname }}</font></a></b><br/><br/>
-					<font size="3">{{ book.bookwriter }}<font>
-					<p>{{book.bookyear}}</p>
+					<font size="3" style = "font-family:'微软雅黑'">作者：{{ book.bookwriter }}</font>
+					<p><font style = "font-family:'微软雅黑'">出版日期：{{book.bookyear}}</font></p>
 				</div>
 			{% endfor %}
 		</div>
