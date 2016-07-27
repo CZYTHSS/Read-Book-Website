@@ -19,7 +19,7 @@ def home(request):
 			return render(request, 'home.html', {'books': Book_info.GetbooksbyNewDate(), 'hotbooks': Book_info.GetbooksbyPoint()})
 		elif len(request.GET) > 0:
 			a = Book_Review.GetCommentsBybookname(request.GET['book'])
-			a1 = Book_info.objects.get(bookname = request.GET['book'],classification = request.GET['class'])
+			a1 = Book_info.objects.filter(bookname = request.GET['book'],classification = request.GET['class'])[0]
 			return render(request,'book.html',{'bookobject':a1,'username':request.GET['username'],'comment':a})
 	else:
 		print(len(request.POST))
@@ -60,7 +60,6 @@ def userregister(request):
 		return render(request, 'user_registration.html')
 		
 def userlogin(request):
-	print(request.POST)
 	if request.POST:   # 当提交表单时  
 		if len(request.POST) == 5:
 			if request.POST['select'] == "书名":
