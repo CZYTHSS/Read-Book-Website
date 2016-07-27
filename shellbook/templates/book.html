@@ -253,11 +253,11 @@
 				margin-top:5%;
 			}
 			.NewBooks{
-				width:50%;
+				width:80%;
+				padding-left:10%;
+				padding-right:10%;
 				/* height:850px; */
 				text-align:left;
-				padding-left:25%;
-				padding-right:25%;
 				font-family:"华文新魏";
 			}
 			#section1{
@@ -300,9 +300,9 @@
 				cursor: pointer;
 			}
 			.comment {
-				width:50%;
-				padding-left:25%;
-				padding-right:25%;
+				width:80%;
+				padding-left:10%;
+				padding-right:10%;
 				font-family:"华文新魏";
 				margin-top:10px;
 				height:200px;
@@ -595,9 +595,9 @@
 				float:left;
 			}
 			#review{
-				width:50%;
-				padding-left:25%;
-				padding-right:25%;
+				width:80%;
+				padding-left:10%;
+				padding-right:10%;
 				font-family:"华文新魏";
 			}
 			.singlereview{
@@ -621,6 +621,7 @@
 			#review_section{
 				font-size:25px;
 				text-align:center;
+				margin-top:50px;
 			}
 			#introduce{
 				border:3px solid gray;
@@ -630,12 +631,32 @@
 			}
 			#notice{margin-bottom:100px;}
 			#mybooks{
-				width:50%;
-				padding-left:25%;
-				padding-right:25%;
+				width:80%;
+				padding-left:10%;
+				padding-right:10%;
 				height:50px;
+				margin-top:30px;
 			}
 			#collect_section{font-size:20px;font-family:"华文新魏";float:left}
+			#otherInfo{
+				width:80%;
+				padding-left:10%;
+				padding-right:10%;
+				font-family:"微软雅黑";
+			}
+			#otherInfo_section{
+				font-size:25px;
+				text-align:center;
+				margin-top:50px;
+				font-family:"华文新魏";
+			}
+			#newbook_section{
+				font-size:25px;
+				text-align:center;
+				margin-top:50px;
+				font-family:"华文新魏";
+			}
+			#bookbody{width:64%;margin-left:18%;margin-right:18%;border:3px solid gray}
 		</style>
 	</head>
 	<body>
@@ -664,66 +685,79 @@
 		</div>
 		<div id = "section1" align="center"><h1>详细信息</h1></div>
 			<hr />
-		<div class = "NewBooks" >
-			<b><font size="6">{{ bookobject.bookname }}</font></b><br/><br/>
-			
-			<div class = "NewBook" >
-				<img src = "{{bookobject.bookcover}}"/><br/>
-			</div>
-			<div class="BookInfo">
-				<p><span class="BookLabel">作者：</span>{{ bookobject.bookwriter }}</p>
-				<p><span class="BookLabel">出版时间：</span>{{bookobject.bookyear}}</p>
-				<p><span class="BookLabel">出版社：</span>{{bookobject.bookpress}}</p>
-				<p><span class="BookLabel">类别：</span>{{bookobject.classification}}</p>
-				<p><span class="BookLabel">已评价用户数：</span>{{bookobject.usernumber}}</p>
-				<p><span class="BookLabel">一星评价数：</span>{{bookobject.onepoint}}</p>
-				<p><span class="BookLabel">二星评价数：</span>{{bookobject.twopoint}}</p>
-				<p><span class="BookLabel">三星评价数：</span>{{bookobject.threepoint}}</p>
-				<p><span class="BookLabel">四星评价数：</span>{{bookobject.fourpoint}}</p>
-				<p><span class="BookLabel">五星评价数：</span>{{bookobject.fivepoint}}</p>
-			</div>
-		</div>
-		<form method = "POST">
-			{% csrf_token %}
-			{% if username != "" %}
-			<div id = "mybooks">
-				<div id = "collect_section">将本书收藏为：</div>
-				<input class = "collectButton" type = "submit" value = "已读" name = "status">
-				<input class = "collectButton" type = "submit" value = "想读" name = "status">
-				<input class = "collectButton" type = "submit" value = "正在读" name = "status">
-			</div>
-			{% endif %}
-		</form>
-		<form method = "POST">
-			{% csrf_token %}
-			<div id = "review">
-				<div id = "review_section">用户评论</div>
+		<div id = "bookbody">
+			<div class = "NewBooks" >
+				<div id = "newbook_section">书籍概况</div>
 				<hr />
-				{% for review in comment %}
-					<div class = "singlereview" >
-						<div class = "border">
-							{% if review.photo == "" %}
-								<div class="portraitbox"><img class="portrait" src="http://127.0.0.1:8000/media/upload/desert.jpg"/></div>
-							{% else %}
-								<div class="portraitbox"><img class="portrait" src="{{review.photo.url}}"/></div>
-							{% endif %}
-							<div class="nickname">{{review.nickname}}</div>
-						</div>
-						<div class="content">{{review.comment}}</div>
-						<div id = "time">发表于{{review.time}}</div>
-					</div>
-				{% endfor %}
-				{% if comment %}
-				{% else %}
-				<div id = "notice" align = center><font size = 5>这本书还没有用户评论哦，快来评论吧！</font></div>
+				<div class = "NewBook" >
+					<img src = "{{bookobject.bookcover}}"/><br/>
+				</div>
+				<div class="BookInfo">
+					<p><span class="BookLabel">书名：</span>{{ bookobject.bookname }}</p>
+					<p><span class="BookLabel">作者：</span>{{ bookobject.bookwriter }}</p>
+					<p><span class="BookLabel">出版时间：</span>{{bookobject.bookyear}}</p>
+					<p><span class="BookLabel">出版社：</span>{{bookobject.bookpress}}</p>
+					<p><span class="BookLabel">类别：</span>{{bookobject.classification}}</p>
+					<p><span class="BookLabel">已评价用户数：</span>{{bookobject.usernumber}}</p>
+					<p><span class="BookLabel">一星评价数：</span>{{bookobject.onepoint}}</p>
+					<p><span class="BookLabel">二星评价数：</span>{{bookobject.twopoint}}</p>
+					<p><span class="BookLabel">三星评价数：</span>{{bookobject.threepoint}}</p>
+					<p><span class="BookLabel">四星评价数：</span>{{bookobject.fourpoint}}</p>
+					<p><span class="BookLabel">五星评价数：</span>{{bookobject.fivepoint}}</p>
+				</div>
+			</div>
+			<form method = "POST">
+				{% csrf_token %}
+				{% if username != "" %}
+				<div id = "mybooks">
+					<div id = "collect_section">将本书收藏为：</div>
+					<input class = "collectButton" type = "submit" value = "已读" name = "status">
+					<input class = "collectButton" type = "submit" value = "想读" name = "status">
+					<input class = "collectButton" type = "submit" value = "正在读" name = "status">
+				</div>
 				{% endif %}
+			</form>
+			<div id = "otherInfo">
+				<div id = "otherInfo_section">书籍详情</div>
+				<hr />
+				<li><font style = "font-weight:bold">书籍编号：</font>{{bookobject.booknumber}}</li><br/>
+				<li><font style = "font-weight:bold">书籍价格：</font>{{bookobject.bookprice}}</li><br/>
+				<li><font style = "font-weight:bold">书籍版本：</font>{{bookobject.bookbinding}}</li><br/>
+				<li><font style = "font-weight:bold">作者介绍：</font><br/>{{bookobject.writerintroduce}}</li><br/>
+				<li><font style = "font-weight:bold">译者：</font>{{bookobject.booktranslater}}</li><br/>
+				<li><font style = "font-weight:bold">书籍介绍：</font><br/>{{bookobject.bookintroduce}}</li>
 			</div>
-			{% if username != "" %}
-			<div class="comment">
-				<textarea id = "introduce" name="comment" cols="80%" rows="5"></textarea>
-				<input type = "submit" class="ClickButton" value = "发表评论" name = "submit">
-			</div>
-			{% endif %}
-		</form>	
+			<form method = "POST">
+				{% csrf_token %}
+				<div id = "review">
+					<div id = "review_section">用户评论</div>
+					<hr />
+					{% for review in comment %}
+						<div class = "singlereview" >
+							<div class = "border">
+								{% if review.photo == "" %}
+									<div class="portraitbox"><img class="portrait" src="http://127.0.0.1:8000/media/upload/desert.jpg"/></div>
+								{% else %}
+									<div class="portraitbox"><img class="portrait" src="{{review.photo.url}}"/></div>
+								{% endif %}
+								<div class="nickname">{{review.nickname}}</div>
+							</div>
+							<div class="content">{{review.comment}}</div>
+							<div id = "time">发表于{{review.time}}</div>
+						</div>
+					{% endfor %}
+					{% if comment %}
+					{% else %}
+					<div id = "notice" align = center><font size = 5>这本书还没有用户评论哦，快来评论吧！</font></div>
+					{% endif %}
+				</div>
+				{% if username != "" %}
+				<div class="comment">
+					<textarea id = "introduce" name="comment" cols="80%" rows="5"></textarea>
+					<input type = "submit" class="ClickButton" value = "发表评论" name = "submit">
+				</div>
+				{% endif %}
+			</form>	
+		</div>
 	</body>
 </html>
