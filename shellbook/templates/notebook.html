@@ -164,6 +164,10 @@
 				padding-top:10px;
 				padding-bottom:10px;
 			}
+			#write{
+				height:250px;
+				width:100%;
+			}
 		</style>
 	</head>
 
@@ -200,8 +204,10 @@
 					<input type = "submit" name = "score" class = "button" value = "5分">
 				</div>
 				<div id = "writenote_section">撰写读书笔记<hr/></div>
-				<textarea id = "introduce" name="notebook" cols="80%" rows="10"></textarea>
-				<input class= "button" type = "submit" name="score" value = "提交"><br/><br/>
+				<div id = "write">
+					<textarea id = "introduce" name="notebook" cols="80%" rows="10"></textarea>
+					<input class= "ClickButton" type = "submit" name="score" value = "提交">
+				</div>
 				<br/>
 			</div>
 		<form>
