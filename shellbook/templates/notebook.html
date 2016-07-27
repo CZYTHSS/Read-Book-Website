@@ -178,23 +178,24 @@
 				</div>
 			</div>
 		</div>
-		
 		<form method="POST">
 			{% csrf_token %}
 			<div id = "user_info">
 				<h2><font color="gray">我的读书笔记<font></h2>
-				<hr/>
+				{% for notebook in notebooks %}
+					<div>{{notebook.notebook}}</div>
+				{% endfor %}
 				<div id = "review">
 					<div id = "note_section">评价本书</div>
-					<span  class="button">1分</span>
-					<span  class="button">2分</span>
-					<span  class="button">3分</span>
-					<span  class="button">4分</span>
-					<span  class="button">5分</span>
+					<input type = "submit" name = "score" class = "button" value = "1分">
+					<input type = "submit" name = "score" class = "button" value = "2分">
+					<input type = "submit" name = "score" class = "button" value = "3分">
+					<input type = "submit" name = "score" class = "button" value = "4分">
+					<input type = "submit" name = "score" class = "button" value = "5分">
 				</div>
 				<div id = "writenote_section">撰写读书笔记<hr/></div>
-				<textarea id = "introduce" name="comment" cols="80%" rows="10"></textarea>
-				<input type = "submit" class="ClickButton" value = "提交"><br/><br/>
+				<textarea id = "introduce" name="notebook" cols="80%" rows="10"></textarea>
+				<input type = "submit" name="score" value = "提交"><br/><br/>
 				<br/>
 			</div>
 		<form>
