@@ -58,6 +58,10 @@ def userregister(request):
 		b = request.POST['userpassword']
 		if Personal_info.MAddUser(a,b) == 0:
 			return render(request, 'user_registration.html', {'flag': 0})
+		if Personal_info.MAddUser(a,b) == 2:
+			return render(request, 'user_registration.html', {'flag': 2})
+		if Personal_info.MAddUser(a,b) == 3:
+			return render(request, 'user_registration.html', {'flag': 3})
 		else:
 			return HttpResponseRedirect("../login/")
 	else:# 当正常访问时
