@@ -137,17 +137,30 @@ def userinfo(request):
 			else:
 				f = ""
 				Personal_info.Changeuserinfo(d,a,b,c,e,f)
-				return render(request, 'personalhome.html',{'username':d,
+				if Personal_info.GetUserByName(d).photo.url:
+					return render(request, 'personalhome.html',{'username':d,
 					'nickname':Personal_info.GetUserByName(d).nickname,
 					'region':Personal_info.GetUserByName(d).region,
 					'introduce':Personal_info.GetUserByName(d).introduce,
 					'gender':Personal_info.GetUserByName(d).gender,
-					'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
+					'img':Personal_info.GetUserByName(d).photo.url,
 					'friends':results,
 					'message':message,
 					'books_isreading':results3,
 					'books_read':results2,
 					'bookswanted':results4})
+				else:
+					return render(request, 'personalhome.html',{'username':d,
+						'nickname':Personal_info.GetUserByName(d).nickname,
+						'region':Personal_info.GetUserByName(d).region,
+						'introduce':Personal_info.GetUserByName(d).introduce,
+						'gender':Personal_info.GetUserByName(d).gender,
+						'img':"http://127.0.0.1:8000/media/upload/desert.jpg",
+						'friends':results,
+						'message':message,
+						'books_isreading':results3,
+						'books_read':results2,
+						'bookswanted':results4})
 		elif len(request.POST) == 4:
 			if request.POST['add'] == "添加好友":
 				a = request.POST['friends']
@@ -158,8 +171,8 @@ def userinfo(request):
 				for friend in friends:
 					results.append(Personal_info.objects.get(username = friend.username2))
 				message = []
-				message = Message_Record.FindMessage(b,0)
-				books = User_Book_Info.FindBooks(b)
+				message = Message_Record.FindMessage(b)
+				books = User_Book_Info.FindBooks(b,0)
 				results2 = []
 				for book in books:
 					results2.append(Book_info.objects.filter(bookname = book.bookname)[0])

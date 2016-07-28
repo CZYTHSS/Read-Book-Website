@@ -359,11 +359,20 @@ class User_Book_Info(models.Model):
 	point = models.IntegerField()
 	def AddBook(musername,mbookname,mstatus):
 		if mstatus == "已读":
+			if User_Book_Info.objects.filter(username = musername,bookname = mbookname):
+				for i in User_Book_Info.objects.filter(username = musername,bookname = mbookname):
+					i.delete()
 			a = User_Book_Info(username = musername,bookname = mbookname,status = 0,point = 0)
 		elif mstatus == "正在读":
 			a = User_Book_Info(username = musername,bookname = mbookname,status = 1,point = 0)
+			if User_Book_Info.objects.filter(username = musername,bookname = mbookname):
+				for i in User_Book_Info.objects.filter(username = musername,bookname = mbookname):
+					i.delete()
 		elif mstatus == "想读":
 			a = User_Book_Info(username = musername,bookname = mbookname,status = 2,point = 0)
+			if User_Book_Info.objects.filter(username = musername,bookname = mbookname):
+				for i in User_Book_Info.objects.filter(username = musername,bookname = mbookname):
+					i.delete()
 		a.save()
 	def FindBooks(musername,mstatus):
 		a = User_Book_Info.objects.filter(username = musername,status = mstatus)
@@ -373,8 +382,9 @@ class User_Relationship(models.Model):
 	username1 = models.CharField(max_length = 100)
 	username2 = models.CharField(max_length = 100)
 	def AddFriend(muser1,muser2):
-		a = User_Relationship(username1 = muser1,username2 = muser2)
-		a.save()
+		if Personal_info.objects.filter(username = muser2):
+			a = User_Relationship(username1 = muser1,username2 = muser2)
+			a.save()
 	def FindFriends(user1):
 		a = User_Relationship.objects.filter(username1 = user1)
 		return a
@@ -399,9 +409,13 @@ class Message_Record(models.Model):
 		d = c.split('.')[0]
 		b = Personal_info.objects.filter(username = musername1)
 		e = Personal_info.objects.filter(username = musername2)
-		a = Message_Record(username1 = musername1,username2 = musername2,message = mmessage,
-		nickname1 = b[0].nickname,photo1 = b[0].photo,nickname2 = e[0].nickname,photo2 = e[0].photo,date = d)
-		a.save()
+		if e:
+			if User_Relationship.objects.filter(username1 = b[0].username,username2 = e[0].username):
+				if User_Relationship.objects.filter(username1 = e[0].username,username2 = b[0].username):
+					a = Message_Record(username1 = musername1,username2 = musername2,message = mmessage,
+					nickname1 = b[0].nickname,photo1 = b[0].photo,nickname2 = e[0].nickname,photo2 = e[0].photo,date = d)
+					a.save()
+					return 1
 	def FindMessage(user):
 		a = Message_Record.objects.filter(username1 = user)
 		b = Message_Record.objects.filter(username2 = user)
@@ -471,6 +485,8 @@ class Personal_info(models.Model):
 		else:
 			return 0
 	def Changeuserinfo(musername,mnickname,mregion,mintroduce,mgender,mimg):
+		print(1)
+		print(mimg)
 		a = Personal_info.objects.get(username = musername)
 		a.nickname = mnickname
 		a.region = mregion
@@ -485,6 +501,7 @@ class Personal_info(models.Model):
 			if mimg == "":
 				i = 1
 			else:
+				print(2)
 				a.photo = mimg
 		a.save()
 		b = Book_Review.objects.filter(username = musername)
