@@ -150,6 +150,7 @@
 				border-width:3px;
 				text-align:center
 			}
+			#note{color:gray;font-family:"微软雅黑";font-size:5px;}
 		</style>
 	</head>
 
@@ -175,11 +176,19 @@
 			<div id = "user_info">
 				<div id = "inlinetext">
 					<h2><font color="gray">注册</font></h2>
-					<input class = "input" type="text" name="username" placeholder="username"> <br><br>
-					<input class = "input" type="password" name="userpassword" placeholder="password"> <br><br>
+					<input class = "input" type="text" name="username" placeholder="username"> <br/>
+					<div id = "note">长度为8~20</div><br/>
+					<input class = "input" type="password" name="userpassword" placeholder="password"> <br/>
+					<div id = "note">长度至少为6，且同时包含数字和字母</div><br/>
 					<input type = "submit" class="ClickButton" style="float:left;position:relative;left:50px" value = "submit"><br/><br/>
 					{% if flag == 0 %}
 						<div id = "error"><font color = "red">用户名已存在,请重试</font><br/></div>
+					{% endif %}
+					{% if flag == 2 %}
+						<div id = "error"><font color = "red">用户名格式不正确,请重试</font><br/></div>
+					{% endif %}
+					{% if flag == 3 %}
+						<div id = "error"><font color = "red">密码格式不正确,请重试</font><br/></div>
 					{% endif %}
 				</div>
 				<br/>
