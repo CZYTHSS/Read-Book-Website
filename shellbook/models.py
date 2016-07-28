@@ -469,9 +469,16 @@ class Personal_info(models.Model):
 	def MAddUser(musername,muserpassword):
 		b = Personal_info.objects.filter(username = musername)
 		if len(b) == 0:
-			a = Personal_info(username = musername,password = muserpassword,nickname = "",gender = 0,photo = "",region = "",introduce = "")
-			a.save()
-			return 1
+			if len(musername) < 8:
+				return 2
+			elif len(musername) > 20:
+				return 2
+			elif Personal_info.Is_Simple(muserpassword):
+				return 3
+			else:
+				a = Personal_info(username = musername,password = muserpassword,nickname = "",gender = 0,photo = "",region = "",introduce = "")
+				a.save()
+				return 1
 		else:
 			return 0
 	#0登陆失败,1登陆成功
@@ -523,6 +530,11 @@ class Personal_info(models.Model):
 		return Personal_info.objects.get(username = musername)
 	def GetUsersByName(nick):
 		return Personal_info.objects.filter(username = nick)
+	def Is_Simple(password):
+		if re.match(r'^(?=.*[A-Za-z])(?=.*[0-9])\w{6,}$',password):
+			return 0
+		else:
+			return 1
 		
 class Notebook(models.Model):
 	username = models.CharField(max_length = 100)
